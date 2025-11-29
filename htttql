@@ -1,0 +1,133 @@
+CD-ROM: Chỉ đọc, không thể ghi hoặc xóa.
+CD-R: Ghi một lần duy nhất, không thể xóa.
+CD-RW: Ghi và xóa nhiều lần.
+DVD-R: Ghi một lần duy nhất, không thể xóa.
+DVD+R: Ghi một lần duy nhất, không thể xóa (Là một chuẩn cạnh tranh của DVD-R).
+DVD-RW: Ghi và xóa nhiều lần.
+DVD+RW: Ghi và xóa nhiều lần (Là một chuẩn cạnh tranh của DVD-RW).
+AAIMS: Hệ thống quản lý và phân tích thông tin Mỹ
+ALU: Số học và đơn vị luận lý
+ASP: Cung cấp dịch vụ ứng dụng
+BI: Kinh doanh thông minh
+BIS: Hệ thống thông tin kinh doanh
+BOM: Hóa đơn nguyên liệu
+C2G: Khách hàng đến chính phủ
+CAD: Thiết kế được sự hỗ trợ của máy tính
+CAM: Sản xuất máy tính hỗ trợ
+CASE: Công nghệ phần mềm máy tính hỗ trợ
+CBIS: Hệ thống thông tin máy tính Dựa
+CD: Là một kỹ thuật số quang lưu trữ dữ liệu định dạng
+CD-ROM: Là một đĩa CD có thể được đọc bởi một máy tính có ổ đĩa quang.
+G2G: Giao dịch thương mại điện tử giữa hai cơ quan nhà nước với nhau
+GIS: Hệ thống thông tin địa lý
+GS: Hệ thống hỗ trợ nhóm công tác
+GSS: Hệ thống hỗ trợ nhóm làm việc
+GUI: Giao diện đồ họa người dùng
+HTML: Ngôn ngữ siêu liên kết chuẩn
+IFPS: Phần mềm quản lý tài chính, giúp xây dựng các mô hình tài chính, xử lý chúng nhằm mô phỏng các tình huống kinh doanh
+IIS: Hệ thống thông tin tích hợp
+IRR: Tỷ suất hoàn vốn nội bộ
+JAR: Phương pháp phối hợp xác định yêu cầu hệ thống
+JIT: Tên của 1 hệ thống thông tin dự trữ đúng nơi, đúng lúc
+KMS: Hệ thống quản lý tri thức
+LAN: Mạng cục bộ
+MFLOPS: Một đơn vị đo tốc độ máy tính
+MICR: Công nghệ nhận dạng mực từ
+MIS: Hệ thống thông tin quản lý
+MODEM: Thiết bị thực hiện chuyển đổi các tín hiệu số của 1 máy tính thành dạng tương tự để truyền chúng qua đường điện thoại và chức năng chuyển các tín hiệu tương tự trở lại tín hiệu dạng số để 1 máy tính khác tiếp nhận
+MRP: (Hệ thống thông tin) hoạch định nhu cầu nguyên vật liệu
+MSP: Phần mềm lựa chọn chất liệu
+MSS: Hệ thống thông tin hỗ trợ quản lý
+MYM: Phần mềm quản trị tài chính của andrew tobias, cho phép người dùng ghi nhận lại các nghiệp vụ tài chính của mình trong 1 sổ
+NOS: Quản lý hệ thống mạng
+NPV: Giá trị hiện tại ròng
+OAS: Hệ thống tự động hóa văn phòng
+OCR: Công nghệ nhận dạng ký tự quang học
+OLAP: Thủ tục phân tích trực tuyến
+OOAD: Phương pháp phân tích và thiết kế hướng đối tượng
+OODB: Object-oriented database (Cơ sở dữ liệu hướng đối tượng)
+PBX: Hệ thống máy tính với chức năng chuyển mạch các tín hiệu điện thoại, kể cả âm thanh lẫn dữ liệu
+STEP: Strategic for Technology Enablement through People
+SWOT: Strength, Weakness, Opportunities, Threats
+TCP/IP: Transmission Control Protocol/ Internet Protocol
+TPS: Transaction Processing Systems
+UPC: Universal Product Code
+UPS: United Parcel Service
+VAN: Value-Added Networks
+VPN: Value Private Networks
+WAN: Wide Area Networks
+PC: Personal Computer
+PCS: Process Control Systems
+PERT: Program Evaluation and Review Technique
+POS: Point Of Sale
+PP: Payback Period
+PRMS: Partner Relationship Managements Systems
+RAD: Rapid Application Development
+RFID: Radio Frequency Identification
+RL: Recorder Level
+ROM: Read Only Memory
+SAAS: Software-as-a-Service
+SDLC: System Development Life Cycle
+SCMS: Supply Chain Management Systems
+SIS: Strategic Information Systems
+SLA: Service-Level Agreement
+SQL: Structured Query Language
+AAIMS: American analytical information management systems
+ATM: Automated teller machine
+BI: Business Intelligence (trí tuệ kinh doanh)
+CBIS: Computer Based Information Systems
+DM: Data Mining
+DSS: Decision support systems
+DW: Data warehouse
+ERP: Enterprise Resources Planning
+ES: Expert systems
+ESS: Executive support systems
+FA: Factory Automation
+GIS: Geographic information systems
+GS: Groupware System
+GSS: Group Support Systems
+IIS: Integrated information systems
+JIT: Just-in-time
+KMS: Knowledge Management Systems
+MIS: Management information system
+OAS: Office Automation System
+PCS: Process control systems
+SIS: Strategic information systems
+I. HTTT phục vụ hoạt động nội bộ của tổ chức
+1. HTTT hỗ trợ hoạt động tác nghiệp
+HT xử lý giao dịch
+HT quản trị tích hợp doanh nghiệp
+HT kho dữ liệu
+HT tự động hóa văn phòng
+HT hỗ trợ nhóm công tác
+HT tự động hóa sản xuất
+HT Quản lý chuỗi cung cấp
+2. HTTT hỗ trợ hoạt động quản lý
+HT hỗ trợ ra quyết định
+HT khai phá dữ liệu
+HT hỗ trợ nhóm làm việc
+HTTT địa lý
+HTTT phục vụ lãnh đạo
+HT tri thức kinh doanh
+HTTT quản lý tri thức
+Hệ chuyên gia
+
+II. HTTT phối hợp hoạt động giữa các tổ chức
+HTTT trao đổi dữ liệu điện tử
+HTTT thương mại điện tử
+HTTT dự trữ đúng thời điểm
+ Phân loại Hệ thống Thông tin theo Chức năng
+I. HTTT hỗ trợ hoạt động tác nghiệp
+HTTT xử lý giao dịch: Xử lý các giao dịch nghiệp vụ.
+HTTT kiểm soát quá trình: Kiểm soát các quá trình công nghiệp.
+Hệ thống hỗ trợ công tác trong tổ chức: Hỗ trợ công tác của nhóm làm việc.
+II. HTTT hỗ trợ hoạt động quản lý
+HTTT quản lý: Cung cấp các báo cáo chuẩn mực, định kỳ cho các nhà quản lý.
+HTTT trợ giúp ra quyết định: Hỗ trợ quá trình ra quyết định thông qua giao diện đối thoại.
+HTTT trợ giúp lãnh đạo: Cung cấp những thông tin tin đúng dạng cho cán bộ lãnh đạo.
+Hệ chuyên gia (ES)
+HT quản lý tri thức (Knowledge Management Systems)
+HTTT chiến lược (Strategic Information Systems SIS) 
+HTTT nghiệp vụ (Business Information Systems BIS) 
+HTTT tích hợp (Intergated Information Systems – IIS)
+
