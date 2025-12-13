@@ -1,0 +1,3295 @@
+
+
+
+
+THI DE VAO NHAT
+
+PHAN 1:
+Đề bài: Quản lý tài khoản ngân hàng với lớp trừu tượng và đa hình
+Xây dựng chương trình quản lý tài khoản ngân hàng, trong đó hai loại tài khoản (tài khoản tiết kiệm và tài khoản thanh toán) có cách tính lãi và hiển thị thông tin khác nhau.
+import java.util.Scanner;
+
+
+abstract class BankAccount {
+    private String ownerName;
+    protected double balance;
+
+
+    public BankAccount(String ownerName, double balance) {
+        this.ownerName = ownerName;
+        this.balance = balance;
+    }
+
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+
+    public double getBalance() {
+        return balance;
+    }
+
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+
+    public abstract double calcInterest();
+    public abstract void showInfo();
+}
+
+
+class SavingAccount extends BankAccount {
+    private double interestRate;
+
+
+    public SavingAccount(String ownerName, double balance, double interestRate) {
+        super(ownerName, balance);
+        this.interestRate = interestRate;
+    }
+
+
+    @Override
+    public double calcInterest() {
+        return balance * (interestRate / 100.0);
+    }
+
+
+    @Override
+    public void showInfo() {
+        System.out.println("=== Tài khoản Tiết kiệm ===");
+        System.out.println("Chủ tài khoản: " + getOwnerName());
+        System.out.printf("Số dư: %.2f\n", getBalance());
+        System.out.printf("Lãi: %.2f\n", calcInterest());
+    }
+}
+
+
+class CheckingAccount extends BankAccount {
+    private double fee;
+
+
+    public CheckingAccount(String ownerName, double balance, double fee) {
+        super(ownerName, balance);
+        this.fee = fee;
+    }
+
+
+    @Override
+    public double calcInterest() {
+        return 0; // tài khoản thanh toán không có lãi
+    }
+
+
+    @Override
+    public void showInfo() {
+        System.out.println("=== Tài khoản Thanh toán ===");
+        System.out.println("Chủ tài khoản: " + getOwnerName());
+        System.out.printf("Số dư: %.2f\n", getBalance());
+        System.out.printf("Phí duy trì: %.2f\n", fee);
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        // Saving account
+        String name1 = sc.nextLine();
+        double bal1 = Double.parseDouble(sc.nextLine());
+        double rate = Double.parseDouble(sc.nextLine());
+
+
+        // Checking account
+        String name2 = sc.nextLine();
+        double bal2 = Double.parseDouble(sc.nextLine());
+        double fee = Double.parseDouble(sc.nextLine());
+
+
+        SavingAccount sa = new SavingAccount(name1, bal1, rate);
+        CheckingAccount ca = new CheckingAccount(name2, bal2, fee);
+
+
+        sa.showInfo();
+        ca.showInfo();
+    }
+}
+
+
+
+
+Đề bài: Hệ thống quản lý khóa học và giảng viên
+Xây dựng chương trình mô phỏng hệ thống quản lý khóa học, trong đó giảng viên có khả năng giảng dạy và khóa học có khả năng hiển thị thông tin.
+
+—
+import java.util.Scanner;
+
+
+interface ITeacher {
+    void teach();
+    void showTeacherInfo();
+}
+
+
+abstract class Course {
+    protected String courseName;
+    protected int duration;
+
+
+    public Course(String courseName, int duration) {
+        this.courseName = courseName;
+        this.duration = duration;
+    }
+
+
+    public abstract void showCourseInfo();
+}
+
+
+class OnlineCourse extends Course {
+    private String platform;
+
+
+    public OnlineCourse(String courseName, int duration, String platform) {
+        super(courseName, duration);
+        this.platform = platform;
+    }
+
+
+    @Override
+    public void showCourseInfo() {
+        System.out.println("=== Thông tin Khóa học Online ===");
+        System.out.println("Tên khóa học: " + courseName);
+        System.out.println("Số buổi: " + duration);
+        System.out.println("Nền tảng: " + platform);
+    }
+}
+
+
+class Lecturer implements ITeacher {
+    private String name;
+    private String level;
+
+
+    public Lecturer(String name, String level) {
+        this.name = name;
+        this.level = level;
+    }
+
+
+    @Override
+    public void teach() {
+        System.out.println(name + " đang bắt đầu giảng dạy...");
+    }
+
+
+    @Override
+    public void showTeacherInfo() {
+        System.out.println("=== Thông tin Giảng viên ===");
+        System.out.println("Họ tên: " + name);
+        System.out.println("Trình độ: " + level);
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        String lecName = sc.nextLine().trim();
+        String level = sc.nextLine().trim();
+        String courseName = sc.nextLine().trim();
+        int duration = Integer.parseInt(sc.nextLine().trim());
+        String platform = sc.nextLine().trim();
+
+
+        // Tạo đối tượng
+        Lecturer lecturer = new Lecturer(lecName, level);
+        OnlineCourse onlineCourse = new OnlineCourse(courseName, duration, platform);
+
+
+        // Xuất thông tin
+        lecturer.showTeacherInfo();
+        lecturer.teach();
+        onlineCourse.showCourseInfo();
+
+
+        sc.close();
+    }
+}
+
+
+
+Đề bài: Quản lý phương tiện giao thông
+
+PHẦN CÂU 1:  
+Xây dựng chương trình quản lý phương tiện giao thông theo hướng đối tượng:
+import java.util.*;
+
+
+interface ITaxable {
+    double calcTax();
+}
+
+
+abstract class Vehicle {
+    private String brand;
+    protected String plateNumber;
+    protected double basePrice;
+
+
+    public Vehicle(String brand, String plateNumber, double basePrice) {
+        this.brand = brand;
+        this.plateNumber = plateNumber;
+        this.basePrice = basePrice;
+    }
+
+
+    public String getBrand() {
+        return brand;
+    }
+
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+
+    public abstract void showInfo();
+}
+
+
+class Car extends Vehicle implements ITaxable {
+    private int seatCount;
+
+
+    public Car(String brand, String plateNumber, double basePrice, int seatCount) {
+        super(brand, plateNumber, basePrice);
+        this.seatCount = seatCount;
+    }
+
+
+    @Override
+    public double calcTax() {
+        if (seatCount <= 5) {
+            return basePrice * 0.10;
+        } else {
+            return basePrice * 0.12;
+        }
+    }
+
+
+    @Override
+    public void showInfo() {
+        double tax = calcTax();
+        double total = basePrice + tax;
+
+
+        System.out.println("=== Car ===");
+        System.out.println("Hãng: " + getBrand());
+        System.out.println("Biển số: " + plateNumber);
+        System.out.printf("Giá cơ bản: %.2f\n", basePrice);
+        System.out.println("Số ghế: " + seatCount);
+        System.out.printf("Thuế: %.2f\n", tax);
+        System.out.printf("Tổng tiền: %.2f\n", total);
+    }
+}
+
+
+class Motorbike extends Vehicle implements ITaxable {
+    private int engineCC;
+
+
+    public Motorbike(String brand, String plateNumber, double basePrice, int engineCC) {
+        super(brand, plateNumber, basePrice);
+        this.engineCC = engineCC;
+    }
+
+
+    @Override
+    public double calcTax() {
+        if (engineCC < 150) {
+            return basePrice * 0.05;
+        } else {
+            return basePrice * 0.08;
+        }
+    }
+
+
+    @Override
+    public void showInfo() {
+        double tax = calcTax();
+        double total = basePrice + tax;
+
+
+        System.out.println("\n=== Motorbike ===");
+        System.out.println("Hãng: " + getBrand());
+        System.out.println("Biển số: " + plateNumber);
+        System.out.printf("Giá cơ bản: %.2f\n", basePrice);
+        System.out.println("Dung tích: " + engineCC);
+        System.out.printf("Thuế: %.2f\n", tax);
+        System.out.printf("Tổng tiền: %.2f\n", total);
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
+        Scanner sc = new Scanner(System.in);
+
+
+        // Car input
+        String carBrand = sc.nextLine().trim();
+        String carPlate = sc.nextLine().trim();
+        double carPrice = Double.parseDouble(sc.nextLine().trim());
+        int seatCount = Integer.parseInt(sc.nextLine().trim());
+
+
+        // Motorbike input
+        String motoBrand = sc.nextLine().trim();
+        String motoPlate = sc.nextLine().trim();
+        double motoPrice = Double.parseDouble(sc.nextLine().trim());
+        int engineCC = Integer.parseInt(sc.nextLine().trim());
+
+
+        // Create objects
+        Car car = new Car(carBrand, carPlate, carPrice, seatCount);
+        Motorbike mb = new Motorbike(motoBrand, motoPlate, motoPrice, engineCC);
+
+
+        // Output
+        car.showInfo();
+        mb.showInfo();
+
+
+        sc.close();
+    }
+}
+
+
+
+
+
+
+CAU 2==========================
+Đề bài: Thống kê ký tự từ file văn bản
+Viết chương trình thực hiện các yêu cầu sau:
+Nhập từ bàn phím một chuỗi bất kỳ.
+Ghi chuỗi này vào file input.txt.
+Đọc lại toàn bộ nội dung file input.txt
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+
+
+        String filename = "input.txt";
+
+
+        // Ghi vào file
+        try (FileWriter fw = new FileWriter(filename)) {
+            fw.write(input);
+        } catch (IOException e) {
+            return;
+        }
+
+
+        // Đọc lại file
+        StringBuilder content = new StringBuilder();
+        try (FileReader fr = new FileReader(filename)) {
+            int ch;
+            while ((ch = fr.read()) != -1) {
+                content.append((char) ch);
+            }
+        } catch (IOException e) {
+            return;
+        }
+
+
+        // Thống kê ký tự
+        int letters = 0, digits = 0, others = 0;
+
+
+        for (char c : content.toString().toCharArray()) {
+            if (Character.isLetter(c)) letters++;
+            else if (Character.isDigit(c)) digits++;
+            else others++;
+        }
+
+
+        // In kết quả đúng format
+        System.out.println("Letters: " + letters);
+        System.out.println("Digits: " + digits);
+        System.out.println("Others: " + others);
+    }
+}
+
+
+Đề bài: Ghi danh sách số thực và tính trung bình (DataOutputStream / DataInputStream)
+Viết chương trình thực hiện:
+Nhập từ bàn phím N số thực.
+Ghi toàn bộ các số vào file double.dat bằng DataOutputStream.
+Đọc lại dữ liệu bằng DataInputStream.
+Tính giá trị trung bình cộng của các số và in ra màn hình.
+ import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        double[] arr = new double[N];
+
+
+        for (int i = 0; i < N; i++) {
+            arr[i] = sc.nextDouble();
+        }
+
+
+        String filename = "double.dat";
+
+
+        // Ghi file
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(filename))) {
+            for (double v : arr) {
+                dos.writeDouble(v);
+            }
+        } catch (IOException e) {
+            return;
+        }
+
+
+        // Đọc file
+        double sum = 0;
+        int count = 0;
+
+
+        try (DataInputStream dis = new DataInputStream(new FileInputStream(filename))) {
+            while (true) {
+                double value = dis.readDouble();
+                sum += value;
+                count++;
+            }
+        } catch (EOFException e) {
+            // Kết thúc file
+        } catch (IOException e) {
+            return;
+        }
+
+
+        double avg = sum / count;
+
+
+        // In kết quả
+        System.out.printf("Average: %.2f", avg);
+    }
+}
+
+
+Đề bài: Ghi và đọc danh sách sinh viên (ObjectOutputStream / ObjectInputStream)
+Viết chương trình thực hiện:
+Nhập thông tin N sinh viên, mỗi sinh viên gồm:
+Họ tên
+Tuổi
+Điểm trung bình
+import java.io.*;
+import java.util.*;
+
+
+class Student implements Serializable {
+    String name;
+    int age;
+    double score;
+
+
+    Student(String name, int age, double score) {
+        this.name = name;
+        this.age = age;
+        this.score = score;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = Integer.parseInt(sc.nextLine());
+        List<Student> list = new ArrayList<>();
+
+
+        for (int i = 0; i < N; i++) {
+            String name = sc.nextLine();
+            int age = Integer.parseInt(sc.nextLine());
+            double score = Double.parseDouble(sc.nextLine());
+            list.add(new Student(name, age, score));
+        }
+
+
+        String filename = "students.txt";
+
+
+        // GHI FILE bằng ObjectOutputStream
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+            oos.writeObject(list);
+        } catch (IOException e) {
+            return;
+        }
+
+
+        // ĐỌC FILE bằng ObjectInputStream
+        List<Student> loaded = null;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            loaded = (List<Student>) ois.readObject();
+        } catch (Exception e) {
+            return;
+        }
+
+
+        // IN SINH VIÊN CÓ SCORE >= 8.0
+        for (Student s : loaded) {
+            if (s.score >= 8.0) {
+                System.out.printf(
+                    "Name: %s, Age: %d, Score: %.2f%n",
+                    s.name, s.age, s.score
+                );
+            }
+        }
+    }
+}
+
+
+
+
+CAU 3======================================================
+
+Đề bài: Tính tổng các số chẵn bằng Thread
+Cho một mảng gồm N số nguyên. Hãy sử dụng K luồng, mỗi luồng xử lý một đoạn của mảng để tính tổng các số chẵn trong đoạn đó. Sau khi tất cả các luồng hoàn thành, chương trình cộng dồn kết quả và in ra tổng cuối cùng.
+1 ≤ N ≤ 10⁶
+|aᵢ| ≤ 10⁹
+K ≥ 1
+import java.util.*;
+
+
+public class Main {
+
+
+    static class EvenSumThread extends Thread {
+        int[] arr;
+        int start, end;
+        long partialSum = 0;
+
+
+        EvenSumThread(int[] arr, int start, int end) {
+            this.arr = arr;
+            this.start = start;
+            this.end = end;
+        }
+
+
+        public void run() {
+            long sum = 0;
+            for (int i = start; i < end; i++) {
+                if (arr[i] % 2 == 0) sum += arr[i];
+            }
+            partialSum = sum;
+        }
+
+
+        public long getPartialSum() {
+            return partialSum;
+        }
+    }
+
+
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) arr[i] = sc.nextInt();
+
+
+        int K = sc.nextInt();
+
+
+        EvenSumThread[] threads = new EvenSumThread[K];
+
+
+        int chunk = (N + K - 1) / K; // chia đều đoạn
+
+
+        for (int i = 0; i < K; i++) {
+            int start = i * chunk;
+            int end = Math.min(start + chunk, N);
+            if (start >= N) {  
+                threads[i] = new EvenSumThread(arr, 0, 0); // thread rỗng
+            } else {
+                threads[i] = new EvenSumThread(arr, start, end);
+            }
+            threads[i].start();
+        }
+
+
+        long total = 0;
+        for (int i = 0; i < K; i++) {
+            threads[i].join();
+            total += threads[i].getPartialSum();
+        }
+
+
+        System.out.println(total);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Đề bài: Chương trình thực hiện các phép toán số học cơ bản
+Viết chương trình toán học thực hiện các yêu cầu sau
+import java.util.Scanner;
+
+
+// Interface IMathOperation
+interface IMathOperation {
+    void calculate();
+    void showInfo();
+    float PI=3.1416f;
+}
+
+
+// Addition class
+class Addition implements IMathOperation {
+    private float operand1;
+    private float operand2;
+    private float  result;
+    public Addition(float operand1, float operand2){
+        this. operand1= operand1;
+        this.operand2 =  operand2;
+    }
+    @Override
+    public void calculate() {
+        result = operand1+ operand2;
+    }
+    @Override
+    public void showInfo() {
+        calculate();
+        System.out.println("Lớp: Addition ");
+        System.out.printf("%.2f + %.2f = %.2f%n", operand1, operand2, result);
+    }
+
+
+}
+
+
+// Subtraction class
+class Subtraction implements IMathOperation {
+    private float operand1;
+    private float operand2;
+    private float  result;
+    public Subtraction(float operand1, float operand2) {
+        this.operand1 = operand1;
+        this.operand2 = operand2;
+    }
+    @Override
+    public void calculate() {
+        result = operand1 - operand2;
+    }
+    @Override
+    public void showInfo() {
+        calculate();
+        System.out.println("Lớp: Subtraction ");
+        System.out.printf("%.2f - %.2f = %.2f%n", operand1, operand2, result);
+    }
+}
+
+
+// Multiplication class
+class Multiplication implements IMathOperation {
+    private float operand1;
+    private float operand2;
+    private float  result;
+    public Multiplication(float operand1, float operand2){
+        this. operand1= operand1;
+        this.operand2 =  operand2;
+    }
+    @Override
+    public void calculate() {
+        result = operand1 * operand2;
+    }
+    @Override
+    public void showInfo() {
+        calculate();
+        System.out.println("Lớp: Multiplication");
+        System.out.printf("%.2f * %.2f = %.2f%n", operand1, operand2, result);
+    }
+}
+
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+
+
+        Scanner sc = new Scanner(System.in);
+
+
+        // Addition input
+        float a1 = sc.nextFloat();
+        float a2 = sc.nextFloat();
+
+
+        // Subtraction input
+        float s1 = sc.nextFloat();
+        float s2 = sc.nextFloat();
+
+
+        // Multiplication input
+        float m1 = sc.nextFloat();
+        float m2 = sc.nextFloat();
+
+
+        Addition add = new Addition(a1, a2);
+        Subtraction sub = new Subtraction(s1,s2);
+        Multiplication mul = new Multiplication(m1, m2);
+
+
+        add.showInfo();
+        sub.showInfo();
+        mul.showInfo();
+
+
+        sc.close();
+    }
+}
+
+
+
+Đề bài: Quản lý sinh viên NEU
+Hãy viết một chương trình quản lý sinh viên với các yêu cầu sau:
+import java.util.Scanner;
+
+
+// Interface IStaff
+interface IStaff {
+    void work();
+}
+
+
+// Interface IStudent
+interface IStudent {
+    void study();
+}
+
+
+// Abstract class Person
+abstract class Person {
+    String name;          // default
+    private int age;      // private → dùng get/set
+    protected String ID;  // protected
+    public String birthDate;
+
+
+    // abstract method
+    abstract void showInfo();
+
+
+    // Constructor đầy đủ
+    Person(String name, int age, String ID, String birthDate) {
+        this.name = name;
+        this.age = age;
+        this.ID = ID;
+        this.birthDate = birthDate;
+    }
+
+
+    public int getAge() {
+        return age;
+    }
+
+
+    public void setAge(int age) {
+        if (age > 0) {
+            this.age = age;
+        }
+    }
+}
+
+
+// Class NEUStudent
+class NEUStudent extends Person implements IStaff, IStudent {
+    protected String studentID;
+
+
+    NEUStudent(String name, int age, String ID, String birthDate, String studentID) {
+        super(name, age, ID, birthDate);
+        this.studentID = studentID;
+    }
+
+
+    @Override
+    public void showInfo() {
+        System.out.println("----- Thông tin sinh viên -----");
+        System.out.println("Tên: " + name);
+        System.out.println("Tuổi: " + getAge());
+        System.out.println("ID: " + ID);
+        System.out.println("Ngày sinh: " + birthDate);
+        System.out.println("Mã sinh viên: " + studentID);
+    }
+
+
+    @Override
+    public void work() {
+        System.out.println(name + " đang làm việc tại khoa hoặc CLB...");
+    }
+
+
+    @Override
+    public void study() {
+        System.out.println(name + " đang học tập chăm chỉ tại NEU...");
+    }
+}
+
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+
+
+        Scanner sc = new Scanner(System.in);
+
+
+        // Input student 1
+        String name1 = sc.nextLine();
+        int age1 = sc.nextInt();
+        sc.nextLine();
+        String id1 = sc.nextLine();
+        String birth1 = sc.nextLine();
+        String stuID1 = sc.nextLine();
+
+
+        // Input student 2
+        String name2 = sc.nextLine();
+        int age2 = sc.nextInt();
+        sc.nextLine();
+        String id2 = sc.nextLine();
+        String birth2 = sc.nextLine();
+        String stuID2 = sc.nextLine();
+
+
+        // Tạo 2 sinh viên
+        NEUStudent sv1 = new NEUStudent(name1, age1, id1, birth1, stuID1);
+        NEUStudent sv2 = new NEUStudent(name2, age2, id2, birth2, stuID2);
+
+
+        // Gọi hàm
+        sv1.showInfo();
+        sv1.work();
+        sv1.study();
+
+
+        System.out.println();
+
+
+        sv2.showInfo();
+        sv2.work();
+        sv2.study();
+
+
+        sc.close();
+    }
+}
+
+
+Đề bài: Quản lý sản phẩm trong siêu thị mini
+Viết chương trình quản lý các sản phẩm trong một siêu thị mini:
+import java.time.LocalDate;
+import java.util.Scanner;
+
+
+abstract class Product {
+    private String name;
+    protected float price;
+    private String description;
+    protected int quantity;
+
+
+    public Product(String name, float price, String description, int quantity){
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.quantity = quantity;
+    }
+
+
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+
+
+   
+    public abstract void showInfo();
+}
+
+
+class Milk extends Product {
+    private LocalDate expirationDate;
+
+
+    public Milk(String name, float price, String description, int quantity, LocalDate expirationDate){
+        super(name, price, description, quantity);
+        this.expirationDate = expirationDate;
+    }
+
+
+    @Override
+    public void showInfo(){
+        System.out.println("Tên sản phẩm: " + getName());
+        System.out.println("Mô tả: " + getDescription());
+        System.out.printf("Giá: %.2f\n", price);
+        System.out.println("Số lượng: " + quantity);
+        System.out.println("Ngày hết hạn: " + expirationDate);
+    }
+
+
+    public void checkExpired(){
+        if (expirationDate.isBefore(LocalDate.now())) {
+            System.out.println("Sản phẩm đã hết hạn.");
+        } else {
+            System.out.println("Sản phẩm vẫn còn hạn sử dụng.");
+        }
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        String name = sc.nextLine();
+        float price = sc.nextFloat();
+        sc.nextLine();
+        String desc = sc.nextLine();
+        int quantity = sc.nextInt();
+        sc.nextLine();
+        String dateStr = sc.nextLine();
+
+
+        LocalDate expDate = LocalDate.parse(dateStr);
+
+
+        Milk sp = new Milk(name, price, desc, quantity, expDate);
+
+
+        sp.showInfo();
+        sp.checkExpired();
+    }
+}
+
+
+
+Đề bài: Quản lý động vật trong trang trại
+Hãy viết một chương trình quản lý động vật trong trang trại theo yêu cầu sau:
+a. Tạo 3 interface: Animal, Bird, và Horse
+
+ import java.util.Scanner;
+
+
+interface Animal {
+    void eat();
+    void showInfo();
+}
+
+
+interface Bird extends Animal {
+    void fly();
+}
+
+
+interface Horse {
+    void run();
+}
+
+
+class Pegasus implements Bird, Horse {
+    public String name;
+    private int age;
+
+
+    Pegasus(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+
+    @Override
+    public void showInfo() {
+        System.out.println("Tên: " + name);
+        System.out.println("Tuổi: " + age);
+    }
+
+
+    @Override
+    public void eat() {
+        System.out.println(name + " đang ăn cỏ...");
+    }
+
+
+    @Override
+    public void fly() {
+        System.out.println(name + " đang bay trên bầu trời...");
+    }
+
+
+    @Override
+    public void run() {
+        System.out.println(name + " đang chạy rất nhanh...");
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String name = sc.nextLine();
+        int age = sc.nextInt();
+
+
+        Pegasus pe = new Pegasus(name, age);
+
+
+        pe.showInfo();
+        pe.eat();
+        pe.fly();
+        pe.run();
+    }
+}
+
+
+
+Đề bài: Chương trình quản lý nhân sự sử dụng lớp trừu tượng và kế thừa
+Xây dựng chương trình quản lý nhân viên trong doanh nghiệp bằng cách sử dụng lớp trừu tượng và tính đa hình.
+Yêu cầu:
+a. Tạo lớp trừu tượng Employee
+import java.time.LocalDate;
+import java.util.Scanner;
+
+
+abstract class Employee {
+    private String name;
+    private LocalDate started;
+
+
+    // Getter / Setter đúng chuẩn
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public LocalDate getStarted() {
+        return started;
+    }
+
+
+    public void setStarted(LocalDate started) {
+        this.started = started;
+    }
+
+
+    // Constructor đầy đủ tham số
+    Employee(String name, LocalDate started) {
+        this.name = name;
+        this.started = started;
+    }
+
+
+    // Phương thức trừu tượng
+    abstract void showInfo();
+    abstract double calcSalary();
+}
+
+
+
+
+class FullTimeEmployee extends Employee {
+    private double monthlySalary;
+    private double bonus;
+
+
+    FullTimeEmployee(String name, LocalDate started, double monthlySalary, double bonus) {
+        super(name, started);
+        this.monthlySalary = monthlySalary;
+        this.bonus = bonus;
+    }
+
+
+    @Override
+    double calcSalary() {
+        return monthlySalary + bonus;
+    }
+
+
+    @Override
+    void showInfo() {
+        System.out.println("=== Nhân viên Full-Time ===");
+        System.out.println("Tên: " + getName());
+        System.out.println("Ngày bắt đầu: " + getStarted());
+        System.out.printf("Lương cơ bản: %.2f\n", monthlySalary);
+        System.out.printf("Thưởng: %.2f\n", bonus);
+        System.out.printf("Lương thực nhận: %.2f\n\n", calcSalary());
+    }
+}
+
+
+
+
+class PartTimeEmployee extends Employee {
+    private int workingHour;
+    private double rate;
+
+
+    PartTimeEmployee(String name, LocalDate started, int workingHour, double rate) {
+        super(name, started);
+        this.workingHour = workingHour;
+        this.rate = rate;
+    }
+
+
+    @Override
+    double calcSalary() {
+        return workingHour * rate;
+    }
+
+
+    @Override
+    void showInfo() {
+        System.out.println("=== Nhân viên Part-Time ===");
+        System.out.println("Tên: " + getName());
+        System.out.println("Ngày bắt đầu: " + getStarted());
+        System.out.println("Số giờ làm: " + workingHour);
+        System.out.printf("Đơn giá/giờ: %.2f\n", rate);
+        System.out.printf("Lương thực nhận: %.2f\n", calcSalary());
+    }
+}
+
+
+// ============================= MAIN ==============================
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        // Full-time employee
+        String ftName = sc.nextLine();
+        LocalDate ftStarted = LocalDate.parse(sc.nextLine());
+        double ftSalary = sc.nextDouble();
+        double ftBonus = sc.nextDouble();
+        sc.nextLine(); // clear buffer
+
+
+        // Part-time employee
+        String ptName = sc.nextLine();
+        LocalDate ptStarted = LocalDate.parse(sc.nextLine());
+        int ptHour = sc.nextInt();
+        double ptRate = sc.nextDouble();
+
+
+        // Tạo đối tượng
+        Employee full = new FullTimeEmployee(ftName, ftStarted, ftSalary, ftBonus);
+        Employee part = new PartTimeEmployee(ptName, ptStarted, ptHour, ptRate);
+
+
+        // Gọi phương thức
+        full.showInfo();
+        part.showInfo();
+    }
+}
+
+
+
+Đề bài: Chương trình tính toán hình học với Interface và các lớp triển khai
+Tạo interface IShape gồm:- Phương thức void showInfo() để hiển thị thông tin;
+import java.util.Scanner;
+
+
+interface IShape {
+    float PI = 3.1416f;
+
+
+    void showInfo();
+    float getArea();
+    float getPerimeter();
+}
+
+
+class Circle implements IShape {
+    private float radius;
+
+
+    public Circle(float radius) {
+        this.radius = radius;
+    }
+
+
+    public float getRadius() {
+        return radius;
+    }
+
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+
+    @Override
+    public float getArea() {
+        return PI * radius * radius;
+    }
+
+
+    @Override
+    public float getPerimeter() {
+        return 2 * PI * radius;
+    }
+
+
+    @Override
+    public void showInfo() {
+        System.out.printf("Hình tròn: diện tích %.2f, chu vi %.2f\n",
+                getArea(), getPerimeter());
+    }
+}
+
+
+class Rectangle implements IShape {
+    private double width;
+    private double length;
+
+
+    public Rectangle(double width, double length) {
+        this.width = width;
+        this.length = length;
+    }
+
+
+    @Override
+    public float getArea() {
+        return (float) (width * length);
+    }
+
+
+    @Override
+    public float getPerimeter() {
+        return (float) (2 * (width + length));
+    }
+
+
+    @Override
+    public void showInfo() {
+        System.out.printf("Hình chữ nhật: diện tích %.2f, chu vi %.2f\n",
+                getArea(), getPerimeter());
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        float r = sc.nextFloat();
+        double w = sc.nextDouble();
+        double l = sc.nextDouble();
+
+
+        Circle c = new Circle(r);
+        Rectangle rec = new Rectangle(w, l);
+
+
+        c.showInfo();
+        rec.showInfo();
+    }
+}
+
+
+
+Đề bài: Quản lý nhân viên – Tính kế thừa
+Xây dựng lớp trừu tượng Employee có:- Thuộc tính: name, id
+import java.util.*;
+import java.util.Locale;
+
+
+abstract class Employee {
+    protected String id;
+    protected String name;
+
+
+    public Employee(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+
+    public abstract double calculateSalary();
+
+
+    public abstract String getType();
+
+
+    public void displayInfo() {
+        String salaryStr = String.format(Locale.US, "%.1f", calculateSalary());
+        System.out.println(id + " - " + name + " - " + getType() + " - " + salaryStr);
+    }
+}
+
+
+class FullTimeEmployee extends Employee {
+    private double salary;
+
+
+    public FullTimeEmployee(String id, String name, double salary) {
+        super(id, name);
+        this.salary = salary;
+    }
+
+
+    @Override
+    public double calculateSalary() {
+        return salary;
+    }
+
+
+    @Override
+    public String getType() {
+        return "FullTime";
+    }
+}
+
+
+class PartTimeEmployee extends Employee {
+    private double hourlyRate;
+    private int workingHours;
+
+
+    public PartTimeEmployee(String id, String name, double hourlyRate, int workingHours) {
+        super(id, name);
+        this.hourlyRate = hourlyRate;
+        this.workingHours = workingHours;
+    }
+
+
+    @Override
+    public double calculateSalary() {
+        return hourlyRate * workingHours;
+    }
+
+
+    @Override
+    public String getType() {
+        return "PartTime";
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        List<Employee> employees = new ArrayList<>();
+
+
+        for (int i = 0; i < n; i++) {
+            String type = sc.next();
+            String id = sc.next();
+            String name = sc.next();
+
+
+            if (type.equals("F")) {
+                double salary = sc.nextDouble();
+                employees.add(new FullTimeEmployee(id, name, salary));
+            } else if (type.equals("P")) {
+                double hourlyRate = sc.nextDouble();
+                int hours = sc.nextInt();
+                employees.add(new PartTimeEmployee(id, name, hourlyRate, hours));
+            }
+        }
+
+
+        for (Employee e : employees) {
+            e.displayInfo();
+        }
+
+
+        sc.close();
+    }
+}
+
+
+CAU 2—---------------------------------------------------------
+
+
+
+Đề bài: Ghi và đọc đối tượng Sinh viên bằng ObjectOutputStream và ObjectInputStream
+Hãy viết chương trình thực hiện các yêu cầu sau:
+a. Tạo lớp Student với các thuộc tính: tên, tuổi, điểm số. Tạo một đối tượng sinh viên và ghi vào file student.txt bằng lớp ObjectOutputStream.
+import java.io.*;
+import java.util.*;
+
+
+class Student implements Serializable {
+    String name;
+    int age;
+    double  score;
+    Student(String name, int age, double score){
+        this.name= name;
+        this.age= age;
+        this.score= score;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+
+
+        Scanner sc = new Scanner(System.in);
+
+
+        String name = sc.nextLine();
+        int age = sc.nextInt();
+        double score = sc.nextDouble();
+
+
+        Student st = new Student(name, age, score);
+
+
+        String filePath = "student.txt";
+
+
+        // Ghi đối tượng vào file
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))){
+            oos.writeObject(st);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        // Đọc đối tượng từ file
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
+            Student s= (Student) ois.readObject();
+            System.out.println("Name: "+ s.name);
+            System.out.println("Age: "+s.age);
+            System.out.printf("Score: %.2f\n", s.score);
+        }
+        catch(IOException |  ClassNotFoundException   e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+Đề bài: Ghi và đọc đối tượng Sinh viên bằng ObjectOutputStream và ObjectInputStream
+Hãy viết chương trình thực hiện các yêu cầu sau:
+a. Tạo lớp Student với các thuộc tính: tên, tuổi, điểm số. Tạo một đối tượng sinh viên và ghi vào file student.txt bằng lớp ObjectOutputStream.
+import java.io.*;
+import java.util.*;
+
+
+class Student implements Serializable {
+    String name;
+    int age;
+    double  score;
+    Student(String name, int age, double score){
+        this.name= name;
+        this.age= age;
+        this.score= score;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+
+
+        Scanner sc = new Scanner(System.in);
+
+
+        String name = sc.nextLine();
+        int age = sc.nextInt();
+        double score = sc.nextDouble();
+
+
+        Student st = new Student(name, age, score);
+
+
+        String filePath = "student.txt";
+
+
+        // Ghi đối tượng vào file
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))){
+            oos.writeObject(st);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        // Đọc đối tượng từ file
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
+            Student s= (Student) ois.readObject();
+            System.out.println("Name: "+ s.name);
+            System.out.println("Age: "+s.age);
+            System.out.printf("Score: %.2f\n", s.score);
+        }
+        catch(IOException |  ClassNotFoundException   e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+Đề bài: Ghi và đọc đối tượng bằng ObjectOutputStream và ObjectInputStream
+Viết chương trình thực hiện các yêu cầu sau:
+Tạo lớp MyObject gồm:
+Thuộc tính message (String)
+Thuộc tính value (int)
+import java.io.*;
+import java.util.*;
+
+
+class MyObject implements Serializable {
+    String message;
+    int value;
+    MyObject(String message, int value){
+        this.message= message;
+        this.value= value;
+    }
+    @Override
+    public String toString(){
+        return "MyObject{message='" + message + "', value=" + value + "}";
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+
+
+        Scanner sc = new Scanner(System.in);
+        String message = sc.nextLine();
+        int value = sc.nextInt();
+
+
+        MyObject obj = new MyObject(message, value);
+        String filePath = "object.txt";
+
+
+        // Ghi đối tượng
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))){
+            oos.writeObject(obj);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        // Đọc đối tượng
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
+            MyObject readOj = (MyObject) ois.readObject();
+            System.out.println(readOj);
+        }
+         catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+       
+
+
+        sc.close();
+    }
+}
+
+
+
+Đề bài: Ghi và đọc file văn bản bằng FileWriter và BufferedReader
+Viết chương trình thực hiện các yêu cầu sau:
+Nhập từ bàn phím 3 dòng văn bản.
+Sử dụng lớp FileWriter để ghi 3 dòng văn bản này vào file text.txt.
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) {
+
+
+        Scanner sc = new Scanner(System.in);
+        String filePath = "text.txt";
+
+
+        List<String> lines = new ArrayList<>();
+
+
+        // Nhập nhiều dòng văn bản, dừng khi nhập dòng trống
+         for (int i = 0; i < 3; i++) {
+            if (!sc.hasNextLine()) break; // không còn dòng nào
+            String line = sc.nextLine();
+            if (line.isEmpty()) break; // dừng nếu dòng trống
+            lines.add(line);
+        }
+
+
+        // Ghi file bằng FileWriter
+        try(FileWriter fw = new FileWriter(filePath)){
+            for( String line: lines){
+                 fw.write(line + System.lineSeparator());
+            }
+        }
+         catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        // Đọc file bằng BufferedReader
+        int lineCount = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                lineCount++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println("số dòng: " + lineCount);
+    }
+}
+
+
+
+ề bài: Quản lý danh sách sinh viên bằng OutputStreamWriter và InputStreamReader
+Viết chương trình thực hiện các yêu cầu sau:
+Nhập danh sách họ tên sinh viên từ bàn phím (mỗi dòng nhập là một sinh viên, nhập dòng trống để kết thúc).
+Chuẩn hóa tên mỗi sinh viên theo quy tắc:
+
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in, "UTF-8");
+        List<String> students = new ArrayList<>();
+
+
+        // Đọc hết dữ liệu đầu vào
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine().trim();
+            if (!line.isEmpty()) {
+                students.add(line);
+            }
+        }
+
+
+        // Ghi vào file UTF-8 với tên chuẩn hóa
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream("students.txt"), "UTF-8")) {
+            for (String s : students) {
+                String[] words = s.toLowerCase().replaceAll("\\s+", " ").split(" ");
+                StringBuilder sb = new StringBuilder();
+                for (String w : words) {
+                    sb.append(Character.toUpperCase(w.charAt(0)))
+                      .append(w.substring(1))
+                      .append(" ");
+                }
+                writer.write(sb.toString().trim() + "\n");
+            }
+            writer.write("Số lượng sinh viên: " + students.size() + "\n");
+        }
+
+
+        // Đọc lại file UTF-8 và in ra màn hình
+        try (InputStreamReader reader = new InputStreamReader(new FileInputStream("students.txt"), "UTF-8");
+             BufferedReader br = new BufferedReader(reader)) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+    }
+}
+
+
+
+Đề bài: Xử lý chuỗi đọc từ file: chữ ở vị trí lẻ chuyển thành chữ hoa
+Viết chương trình thực hiện các thao tác với file và xử lý chuỗi như sau:
+Nhập một chuỗi bất kỳ từ bàn phím.
+Ghi chuỗi đó vào file raw.txt.
+Đọc toàn bộ nội dung file.
+
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in, "UTF-8");
+        String data = sc.nextLine();
+        String filePath = "raw.txt";
+
+
+        // Ghi chuỗi vào file UTF-8
+        try (FileOutputStream fos = new FileOutputStream(filePath)) {
+            fos.write(data.getBytes("UTF-8"));
+        }
+
+
+        // Đọc chuỗi từ file
+        StringBuilder content = new StringBuilder();
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            int c;
+            while ((c = fis.read()) != -1) {
+                content.append((char) c);
+            }
+        }
+
+
+        // Xử lý: chỉ đếm chữ cái
+        StringBuilder result = new StringBuilder();
+        int letterIndex = 0; // chỉ đếm chữ cái
+        for (int i = 0; i < content.length(); i++) {
+            char ch = content.charAt(i);
+            if (Character.isLetter(ch)) {
+                if (letterIndex % 2 == 1) {
+                    result.append(Character.toUpperCase(ch));
+                } else {
+                    result.append(Character.toLowerCase(ch));
+                }
+                letterIndex++;
+            } else {
+                result.append(ch); // giữ nguyên ký tự không phải chữ cái
+            }
+        }
+
+
+        System.out.println(result.toString());
+    }
+}
+
+
+
+Đề bài: Ghi và đọc tên tiếng Việt bằng BufferedWriter/BufferedReader (Xử lý UTF-8)
+Viết chương trình thực hiện xử lý file văn bản UTF-8 như sau:
+a. Ghi dữ liệu
+Nhập một tên tiếng Việt có dấu từ bàn phím, ví dụ: Nguyễn Văn An
+Sử dụng BufferedWriter và FileWriter với mã hóa UTF-8 để ghi tên vào file utf8.txt
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in, "UTF-8");
+        String filePath = "utf8.txt";
+
+
+        // Nhập tên tiếng Việt
+        String fullName = sc.nextLine();
+
+
+        // --- Ghi ra file UTF-8 ---
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(filePath), StandardCharsets.UTF_8))) {
+            bw.write(fullName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        // --- Đọc file UTF-8 và xử lý ---
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                new FileInputStream(filePath), StandardCharsets.UTF_8))) {
+            String line = br.readLine();
+            if (line != null && !line.isEmpty()) {
+                String[] parts = line.split("\\s+", 2); // tách phần họ và phần còn lại
+                String firstName = parts[0].toUpperCase(); // phần họ viết hoa
+                if (parts.length > 1) {
+                    System.out.println(firstName + " " + parts[1]);
+                } else {
+                    System.out.println(firstName);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        sc.close();
+    }
+}
+
+
+ề bài: Ghi và đọc dữ liệu nhị phân với DataOutputStream và DataInputStream
+Hãy viết chương trình thực hiện:
+a. Sử dụng DataOutputStream để ghi 4 số nguyên được nhập từ bàn phím vào file int.txt b. Sử dụng DataInputStream để đọc lại 4 số nguyên trong file và tính tổng của 4 số c. In ra màn hình kết quả theo định dạng:
+import java.io.*;
+import java.util.Scanner;
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] numbers = new int[4];
+
+
+        // --- Đọc 4 số nguyên từ bàn phím ---
+        for (int i = 0; i < 4; i++) {
+            numbers[i] = sc.nextInt();
+        }
+
+
+        String filePath = "int.txt";
+
+
+        // --- Ghi các số vào file nhị phân ---
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(filePath))) {
+            for (int n : numbers) {
+                dos.writeInt(n);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        int sum = 0;
+
+
+        // --- Đọc các số từ file và tính tổng ---
+        try (DataInputStream dis = new DataInputStream(new FileInputStream(filePath))) {
+            for (int i = 0; i < 4; i++) {
+                int n = dis.readInt();
+                sum += n;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        // --- Xuất kết quả ---
+        System.out.println("Tổng của các số nguyên là: " + sum);
+    }
+}
+
+
+
+CAU3=========================================================
+
+Đề bài: Tính tổng tất cả ước số của các phần tử trong mảng lớn bằng Thread
+Cho một mảng gồm N số nguyên dương. Với mỗi phần tử aᵢ, ta tính tổng tất cả ước số của nó, ví dụ:
+Ước số của 6: 1 + 2 + 3 + 6 = 12
+Ước số của 10: 1 + 2 + 5 + 10 = 18
+import java.util.*;
+
+
+class DivisorThread extends Thread {
+    int[] arr;
+    int start, end;
+    long sum;  // dùng long để tránh tràn
+
+
+    DivisorThread(int[] arr, int start, int end) {
+        this.arr = arr;
+        this.start = start;
+        this.end = end;
+        this.sum = 0;
+    }
+
+
+    // Hàm tính tổng ước số của 1 số
+    private long sumDivisors(int n) {
+        long s = 0;
+        for (int i = 1; i * i <= n; i++) {
+            if (n % i == 0) {
+                s += i;
+                if (i != n / i) s += n / i; // tránh cộng ước số lặp lại
+            }
+        }
+        return s;
+    }
+
+
+    @Override
+    public void run() {
+        for (int i = start; i <= end; i++) {
+            sum += sumDivisors(arr[i]);
+        }
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) arr[i] = sc.nextInt();
+        int K = sc.nextInt();
+
+
+        DivisorThread[] threads = new DivisorThread[K];
+        int chunk = N / K;
+        int extra = N % K;
+        int index = 0;
+
+
+        // Chia mảng thành K đoạn và tạo luồng
+        for (int i = 0; i < K; i++) {
+            int start = index;
+            int len = chunk + (i < extra ? 1 : 0);
+            int end = start + len - 1;
+            threads[i] = new DivisorThread(arr, start, end);
+            threads[i].start();
+            index = end + 1;
+        }
+
+
+        long total = 0;
+        for (int i = 0; i < K; i++) {
+            threads[i].join(); // chờ thread hoàn thành
+            total += threads[i].sum;
+        }
+
+
+        System.out.println(total);
+    }
+}
+
+
+Đề bài: Tính tổng giai thừa các số trong mảng bằng đa luồng
+Cho mảng N số nguyên, mỗi số ≤ 20. Hãy dùng K luồng để tính tổng của:
+import java.util.*;
+
+
+class FactThread extends Thread {
+    int[] arr;
+    int start, end;
+    long sum;
+    FactThread(int[] arr, int start, int end){
+        this.arr= arr;
+        this.start= start;
+        this.end= end;
+    }
+
+
+    private long giaithua(int n){
+        long f= 1;
+        for(int i=2;i<=n;i++){
+            f= f*i;
+        }
+        return f;
+    }
+    @Override
+    public void run(){
+        for ( int i= start; i<=end; i++){
+            sum += giaithua(arr[i]);
+        }
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) arr[i] = sc.nextInt();
+        int K = sc.nextInt();
+
+
+    FactThread[] threads = new FactThread[K];
+
+
+    int chunk = N/K;
+    int extra = N%K;
+    int index =0;
+    for(int i=0; i<K; i++){
+        int start = index;
+        int len = chunk + (i < extra ? 1: 0);
+        int end = start + len -1;
+        threads[i] = new FactThread(arr, start, end);
+        threads[i].start();
+        index= end+ 1;
+    }
+    long total = 0;
+    for (int i = 0; i < K; i++) {
+    try {
+        threads[i].join();
+        total += threads[i].sum;
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+}
+    System.out.println(total);
+    }
+}
+
+
+Đề bài: Đếm số lần xuất hiện của X trong mảng lớn bằng Thread
+Cho mảng N số nguyên và một giá trị X. Hãy dùng đa luồng để đếm xem X xuất hiện bao nhiêu lần trong mảng.
+import java.util.*;
+
+
+class CountThread extends Thread {
+  int[] arr;
+  int start;
+  int end;
+  int count =0;
+  int X;
+  CountThread(int[] arr, int start, int end, int X){
+    this.arr= arr;
+    this.start = start;
+    this.X= X;
+     this.end= end;
+  }
+
+
+  @Override
+  public void run(){
+    for(int i= start; i<= end; i++){
+        if(arr[i] == X){
+            count ++;
+        }
+    }
+  }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) arr[i] = sc.nextInt();
+
+
+        int X = sc.nextInt();
+        int K = sc.nextInt();
+       
+       CountThread[] threads= new CountThread[K];
+
+
+       int chunk = N/K;
+       int extra = N%K;
+       int index =0;
+       for (int i=0; i<K; i++){
+        int start= index;
+        int len = chunk + ( i < extra ? 1 : 0);
+        int end = start+len-1;
+
+
+        threads[i] = new CountThread(arr, start, end,X);
+        threads[i].start();
+        index= end +1;
+
+
+       }
+       int total = 0;
+        for(int i=0; i<K; i++){
+            try{
+                threads[i].join();
+                total += threads[i].count;
+            }
+            catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        System.out.println(total);
+
+
+       
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+Đề bài: Tính tổng bình phương các số lớn bằng đa luồng
+Cho mảng gồm N số nguyên lớn. Dùng K luồng, mỗi luồng tính tổng bình phương một đoạn của mảng. Cuối cùng cộng dồn kết quả và in ra tổng cuối cùng
+import java.util.*;
+
+
+class SquareThread extends Thread {
+    int[] arr;
+    int start, end;
+    long sum;
+    SquareThread(int[] arr, int start, int end){
+        this.arr = arr;
+        this.start= start;
+        this.end= end;
+    }
+    @Override
+    public void run(){
+        for(int i= start; i<= end; i++){
+            sum += (long) arr[i]*arr[i];
+        }
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) arr[i] = sc.nextInt();
+        int K = sc.nextInt();
+       
+       SquareThread[] threads = new SquareThread[K];
+
+
+       int chunk = N/K;
+       int extra = N%K;
+       int index =0;
+
+
+       for(int i=0; i < K; i++){
+        int start = index;
+        int len = chunk + (i< extra ? 1: 0);
+        int end = start + len -1;
+        threads[i] = new SquareThread(arr, start, end);
+        threads[i].start();
+        index = end + 1;
+       }
+       long total = 0;
+       for( int i=0; i<K; i++){
+        try{
+            threads[i].join();
+            total +=threads[i].sum;
+        }
+        catch(InterruptedException e ){
+            e.printStackTrace();
+        }
+       }
+       System.out.print(total);
+
+
+       
+    }
+}
+
+
+Đề bài: Đếm số lượng số nguyên tố bằng đa luồng
+Cho mảng N số nguyên lớn. Dùng K luồng, mỗi luồng xử lý một đoạn của mảng và đếm xem có bao nhiêu số nguyên tố. Cuối cùng cộng dồn số lượng lại.
+import java.util.*;
+
+
+class PrimeThread extends Thread {
+    int[] arr;
+    int start, end;
+    int count=0;
+    PrimeThread(int[] arr, int start, int end){
+        this.arr= arr;
+        this.start= start;
+        this.end = end;
+    }
+    private boolean isPrime(int n){
+    if(n < 2) return false;
+    if(n == 2) return true;
+    if(n % 2 == 0) return false;
+    int sqrt = (int)Math.sqrt(n);
+    for(int i = 3; i <= sqrt; i += 2){
+        if(n % i == 0) return false;
+    }
+    return true;
+}
+    @Override
+    public void run() {
+        for(int i= start; i<= end; i++){
+            if(isPrime(arr[i])){
+            count++;
+        }
+        }
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) arr[i] = sc.nextInt();
+        int K = sc.nextInt();
+
+
+        PrimeThread[] threads = new PrimeThread[K];
+
+
+        int chunk = N/K;
+        int extra= N%K;
+        int index = 0;
+
+
+        for(int i=0; i<K; i++){
+            int start=index;
+            int len = chunk + (i< extra ? 1: 0);
+            int end = start+ len -1;
+            threads[i]= new PrimeThread(arr, start, end);
+            threads[i].start();
+            index = end + 1;
+        }
+        int total = 0;
+        for(int i=0; i<K; i++){
+            try{
+                threads[i].join();
+                total += threads[i].count;
+            }
+            catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        System.out.print(total);
+    }
+}
+
+
+Đề bài: Tìm số lớn nhất trong mảng bằng đa luồng
+Cho một mảng số nguyên lớn. Hãy dùng đa luồng để chia mảng thành K phần. Mỗi luồng tìm giá trị lớn nhất trong phần của mình. Sau đó chương trình kết hợp kết quả để tìm số lớn nhất toàn mảng.
+import java.util.*;
+
+
+class MaxThread extends Thread {
+   int[] arr;
+   int start;
+   int end;
+   int max ;
+    MaxThread(int[] arr, int start, int end){
+        this.arr= arr;
+        this.start= start;
+         this.end= end;
+         this.max= arr[start];
+    }
+    @Override
+    public void run(){
+        for(int i= start; i<=end; i++){
+             if(arr[i] > max){
+                max=arr[i];
+             }
+        }
+    }
+
+
+
+
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) arr[i] = sc.nextInt();
+        int K = sc.nextInt();
+     
+    MaxThread[] threads = new MaxThread[K];
+
+
+    int chunk= N/K;
+    int extra= N%K;
+    int index = 0;
+
+
+    for( int i=0; i< K; i++){
+        int start = index;
+        int lun = chunk + (i< extra ? 1 : 0);
+        int end = start + lun -1;
+        threads[i] = new MaxThread( arr, start, end);
+        threads[i].start();
+
+
+        index= end+ 1;
+    }
+    int total =arr[0];
+    for( int i=0; i<K;i++){
+        try{
+         threads[i].join();
+        if(threads[i].max > total ){
+            total= threads[i].max;
+        }
+        }
+        catch (InterruptedException e) {
+           e.printStackTrace();
+       }
+       
+    }
+       System.out.print(total);
+    }
+}
+
+
+Đề bài: Tính tổng của một mảng số nguyên lớn bằng đa luồng
+Cho một mảng gồm N số nguyên (N rất lớn). Hãy chia mảng này thành K phần, mỗi phần được xử lý bởi một luồng để tính tổng cục bộ. Sau khi tất cả luồng hoàn thành, chương trình phải tính tổng cuối cùng và in ra màn hình.
+import java.util.*;
+
+
+class SumThread extends Thread {
+  int[] arr;
+  int start, end;
+  int sum;
+  SumThread(int[] arr, int start, int end){
+    this.arr= arr;
+    this.start= start;
+    this.end = end;
+    this.sum= 0;
+  }
+
+
+  @Override
+  public void run(){
+    for(int i= start; i<= end; i++){
+        sum +=arr[i];
+    }
+  }
+
+
+
+
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) arr[i] = sc.nextInt();
+        int K = sc.nextInt();
+     
+      SumThread[]  threads = new SumThread[K];
+     
+      int chunk = N/K;
+      int extra = N%K;
+      int index= 0;
+
+
+      for(int i=0; i<K; i++){
+        int start = index;
+        int len = chunk + (i < extra ? 1 : 0);
+        int end = start + len -1;
+        threads[i] = new SumThread(arr, start, end );
+        threads[i].start();
+        index= end+ 1;
+      }
+      long total =0;
+      for(int i=0; i<K; i++){
+        try{
+            threads[i].join();
+            total += threads[i].sum;
+        }
+        catch(InterruptedException e){
+            e.printStackTrace();
+        }
+
+
+      }
+      System.out.print(total);
+
+
+       
+    }
+}
+
+
+CAU4=================================================
+
+Đề bài: Xếp hạng theo điểm số (tự động sắp xếp)
+Cho danh sách tên sinh viên và điểm số. Dùng HashMap<String, Integer> để lưu dữ liệu. Sau đó đưa tên sinh viên vào TreeSet, dùng comparator dựa trên điểm số để sắp xếp giảm dần. Nếu cùng điểm → sắp xếp theo tên.
+In ra danh sách xếp hạng.
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) {
+        // Viết code Java của bạn ở đây
+
+
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+
+
+        HashMap<String,Integer> map = new HashMap<>();
+
+
+        for(int i = 0; i < N; i++){
+            String name = sc.next();
+            int score = sc.nextInt();
+            map.put(name, score);
+        }
+
+
+        TreeSet<String> set = new TreeSet<>((a,b)-> {
+            int scoreA = map.get(a);
+            int scoreB= map.get(b);
+            if( scoreA!=scoreB){
+                return scoreB- scoreA;
+            }
+            return a.compareTo(b);
+        });
+        set.addAll(map.keySet());
+        for (String name:  set){
+            System.out.println(name + ": " + map.get(name));
+        }
+    }
+}
+Đề bài: So sánh hai tập hợp và xuất phần tử chung
+Cho hai tập số nguyên:
+Tập A lưu bằng HashSet
+Tập B lưu bằng TreeSet
+Hãy tìm giao của A và B, sau đó in ra theo thứ tự tăng dần.
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = sc.nextInt();
+        HashSet<Integer> hset = new HashSet<>();
+        for (int i = 0; i < N; i++) {
+            hset.add(sc.nextInt());
+        }
+
+
+        int M = sc.nextInt();
+        TreeSet<Integer> tset = new TreeSet<>();
+        for (int i = 0; i < M; i++) {
+            tset.add(sc.nextInt());
+        }
+
+
+        TreeSet<Integer> result = new TreeSet<>();
+
+
+        for (int x : tset) {
+            if (hset.contains(x)) {
+                result.add(x);
+            }
+        }
+
+
+        for (int x : result) {
+            System.out.print(x + "");
+        }
+    }
+}
+
+
+Đề bài: Đếm ký tự và sắp xếp theo bảng chữ cái
+Nhập chuỗi ký tự. Sử dụng LinkedList<Character> để lưu từng ký tự. Dùng TreeMap<Character, Integer> để đếm số lần xuất hiện và tự động sắp xếp theo alphabet.
+import java.util.*;
+public class Main {
+
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+
+        LinkedList<Character> ll = new LinkedList<>();
+        for (char c : s.toCharArray()) {
+            ll.add(c);
+        }
+
+
+        TreeMap<Character, Integer> map = new TreeMap<>();
+
+
+        for (char c : ll) {
+            if (!map.containsKey(c)) {
+                map.put(c, 1);          // lần đầu gặp ký tự
+            } else {
+                map.put(c, map.get(c) + 1);   // tăng số lần
+            }
+        }
+
+
+        // In kết quả sau khi đếm xong
+        for (char key : map.keySet()) {
+            System.out.println(key + ": " + map.get(key));
+        }
+    }
+}
+
+
+Đề bài: Đếm số lần xuất hiện của từng phần tử
+Cho một danh sách số nguyên trong ArrayList. Hãy sử dụng HashMap để đếm số lần xuất hiện của mỗi phần tử và in ra theo thứ tự xuất hiện lần đầu
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+       
+        int N = sc.nextInt();
+
+
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int i= 0; i<N; i++){
+            arr.add(sc.nextInt());
+        }
+
+
+        HashMap<Integer, Integer> has = new HashMap<>();
+        ArrayList<Integer> order = new ArrayList<>();
+
+
+        for(int x: arr){
+            if(!has.containsKey(x)){
+                has.put(x,1);
+                order.add(x);
+            }
+            else{
+                has.put(x, has.get(x) + 1);
+            }
+        }
+        for(int x: order){
+            System.out.println(x + ": " + has.get(x));
+        }
+
+
+    }
+}
+Đề bài: Trích lọc phần tử duy nhất và sắp xếp tăng dần
+Cho danh sách N số nguyên lưu trong LinkedList. Hãy dùng TreeSet để trích lọc các phần tử không trùng lặp, được sắp xếp tăng dần và in ra
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+
+
+        LinkedList<Integer> list = new LinkedList<>();
+        for(int i= 0; i<N; i++){
+            list.add(sc.nextInt());
+        }
+
+
+        TreeSet<Integer> tset = new TreeSet<>(list);
+
+
+        // for(int x: list){
+
+
+        // }
+        for(int x: tset){
+            System.out.print(x + " ");
+        }
+    }
+}
+Đề bài: Loại bỏ phần tử trùng lặp và sắp xếp theo thứ tự xuất hiện
+Cho danh sách gồm N số nguyên. Hãy thực hiện:
+Lưu danh sách vào ArrayList
+Dùng HashSet để loại bỏ các phần tử trùng lặp
+Giữ nguyên thứ tự xuất hiện ban đầu (chỉ loại trùng, không sắp xếp lại)
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int  N = sc.nextInt();
+
+
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int i=0; i<N; i++){
+            arr.add(sc.nextInt());
+        }
+
+
+        HashSet<Integer> has = new HashSet<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int x: arr){
+            if(!has.contains(x)){ // contains dung de duyet xem phan tu do da  co trong has hay chua
+                has.add(x);
+                list.add(x);
+            }
+        }
+        for(int x: list){
+            System.out.print(x+ " ");
+        }
+
+
+
+
+
+
+    }
+}
+Đề bài: Quản lý danh sách sinh viên bằng ArrayList có sử dụng Generics
+Hãy tạo lớp Student (tên, tuổi, điểm). Tạo một lớp quản lý sử dụng ArrayList<Student> để:
+Thêm N sinh viên từ bàn phím
+Tìm sinh viên có điểm cao nhất
+In ra thông tin sinh viên điểm cao nhất
+import java.util.*;
+
+
+class Student {
+    String name;
+    int age;
+    float diem;
+    Student(String name, int age, float diem){
+        this.name = name;
+        this.age = age;
+        this.diem= diem;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+       
+        ArrayList<Student> list = new ArrayList<>();
+ 
+        for(int i=0; i<N; i++){
+            String name = sc.next();
+            int age = sc.nextInt();
+            float diem= sc.nextFloat();
+            list.add(new Student(name, age, diem));
+        }
+        Student best = list.get(0);
+        for(Student x : list){
+             if(x.diem> best.diem){
+                best= x;
+             }
+        }
+        System.out.printf("Name: %s\n", best.name);
+        System.out.printf("Age: %d\n", best.age);
+        System.out.printf("Score: %.2f\n", best.diem);
+
+
+
+
+
+
+       
+    }
+}
+
+
+Đề bài: Quản lý danh sách sinh viên bằng ArrayList có sử dụng Generics
+Hãy tạo lớp Student (tên, tuổi, điểm). Tạo một lớp quản lý sử dụng ArrayList<Student> để:
+Thêm N sinh viên từ bàn phím
+Tìm sinh viên có điểm cao nhất
+In ra thông tin sinh viên điểm cao nhất
+import java.util.*;
+
+
+class Student {
+    String name;
+    int age;
+    float diem;
+    Student(String name, int age, float diem){
+        this.name = name;
+        this.age = age;
+        this.diem= diem;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+       
+        ArrayList<Student> list = new ArrayList<>();
+ 
+        for(int i=0; i<N; i++){
+            String name = sc.next();
+            int age = sc.nextInt();
+            float diem= sc.nextFloat();
+            list.add(new Student(name, age, diem));
+        }
+        Student best = list.get(0);
+        for(Student x : list){
+             if(x.diem> best.diem){
+                best= x;
+             }
+        }
+        System.out.printf("Name: %s\n", best.name);
+        System.out.printf("Age: %d\n", best.age);
+        System.out.printf("Score: %.2f\n", best.diem);
+
+
+
+
+
+
+       
+    }
+}
+
+
+
+CAU5=======================================================
+
+Đề bài: Phân loại mức tiêu thụ điện của hộ dân
+Cho danh sách hộ dân, mỗi hộ có: tên chủ hộ và số kWh tiêu thụ trong tháng.
+Hãy xử lý bằng Java Streams, sử dụng Predicate, Function, Comparator, Consumer:
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+
+class Home {
+    String owner;
+    double kwh;
+
+
+    Home(String owner, double kwh) {
+        this.owner = owner;
+        this.kwh = kwh;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = Integer.parseInt(sc.nextLine());
+
+
+        List<Home> list = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            String[] p = sc.nextLine().split(" ");
+            list.add(new Home(p[0], Double.parseDouble(p[1])));
+        }
+
+
+        // Predicate: lọc kwh >= 50
+        Predicate<Home> filterPredicate = h -> h.kwh >= 50;
+
+
+        // Function: tính tiền điện
+        Function<Home, Double> calcMoney = h -> h.kwh * 3500;
+
+
+        // Comparator: sắp xếp giảm dần theo tiền
+        Comparator<Home> compareByMoneyDesc =
+                (a, b) -> Double.compare(calcMoney.apply(b), calcMoney.apply(a));
+
+
+        // Consumer: in thông tin
+        Consumer<Home> printInfo = h ->
+                System.out.printf("%s %.2f %.2f%n", h.owner, h.kwh, calcMoney.apply(h));
+
+
+        // Xử lý với Stream
+        list.stream()
+                .filter(filterPredicate)
+                .sorted(compareByMoneyDesc)
+                .forEach(printInfo);
+    }
+}
+
+
+Đề bài: Thống kê chi tiêu của khách hàng
+Cho danh sách giao dịch của khách hàng với số tiền chi tiêu. Hãy xử lý dữ liệu bằng Predicate, Function, Operator, Consumer:
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+
+class Transaction {
+    String name;
+    double amount;
+
+
+    Transaction(String name, double amount) {
+        this.name = name;
+        this.amount = amount;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = Integer.parseInt(sc.nextLine());
+
+
+        List<Transaction> list = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            String[] p = sc.nextLine().split(" ");
+            list.add(new Transaction(p[0], Double.parseDouble(p[1])));
+        }
+
+
+        // Predicate: lọc giao dịch >= 100000
+        Predicate<Transaction> predicate = t -> t.amount >= 100000;
+
+
+        // Function: chuyển sang chuỗi "Tên: số_tiền"
+        Function<Transaction, String> mapper =
+                t -> t.name + ": " + String.format("%.2f", t.amount);
+
+
+        // Operator: giữ chuỗi có số tiền lớn hơn
+        BinaryOperator<String> operator = (s1, s2) -> {
+            double v1 = Double.parseDouble(s1.split(": ")[1]);
+            double v2 = Double.parseDouble(s2.split(": ")[1]);
+            return v1 >= v2 ? s1 : s2;
+        };
+
+
+        // Consumer: in kết quả
+        Consumer<String> consumer = System.out::println;
+
+
+        // Xử lý dữ liệu với Stream
+        list.stream()
+                .filter(predicate)
+                .map(mapper)
+                .collect(Collectors.toMap(
+                        s -> s.split(": ")[0],   // key = tên
+                        s -> s,                 // value = "Tên: số_tiền"
+                        operator,               // nếu trùng tên → giữ số lớn hơn
+                        LinkedHashMap::new      // giữ nguyên thứ tự xuất hiện
+                ))
+                .values()                     // lấy phần value để in
+                .forEach(consumer);
+    }
+}
+
+
+Đề bài: Quản lý điểm danh nhân viên
+Cho danh sách nhân viên gồm tên và số giờ làm trong ngày. Hãy xử lý dữ liệu bằng Supplier, Predicate, Function, Comparator như sau:
+Dùng Supplier để trả về danh sách nhân viên nhập vào.
+Dùng Predicate để lọc nhân viên có số giờ làm ≥ 6 giờ.
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+
+class Staff {
+    String name;
+    double hours;
+
+
+    Staff(String name, double hours) {
+        this.name = name;
+        this.hours = hours;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = Integer.parseInt(sc.nextLine());
+
+
+        List<Staff> list = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            String[] p = sc.nextLine().split(" ");
+            list.add(new Staff(p[0], Double.parseDouble(p[1])));
+        }
+
+
+        // Supplier: trả về danh sách nhân viên
+        Supplier<List<Staff>> supplier = () -> list;
+
+
+        // Predicate: lọc nhân viên có giờ làm ≥ 6
+        Predicate<Staff> predicate = s -> s.hours >= 6;
+
+
+        // Function: chuyển giờ -> phút
+        Function<Staff, Integer> toMinutes = s -> (int)(s.hours * 60);
+
+
+        // Comparator: sắp xếp theo phút giảm dần
+        Comparator<Staff> comparator =
+                (a, b) -> Integer.compare((int)(b.hours * 60), (int)(a.hours * 60));
+
+
+        // Xử lý dữ liệu
+        supplier.get().stream()
+                .filter(predicate)
+                .sorted(comparator)
+                .forEach(s -> {
+                    int minutes = toMinutes.apply(s);
+                    System.out.println(s.name + " " +
+                            String.format("%.2f", s.hours) + " " +
+                            minutes);
+                });
+    }
+}
+
+
+Đề bài: Xử lý danh sách khách hàng và tính phí dịch vụ
+Cho danh sách khách hàng gồm: tên và số lần sử dụng dịch vụ trong tháng (số nguyên ≥ 0).
+Hãy xử lý dữ liệu bằng Java Streams, trong đó sử dụng Predicate, Function, Comparator và Consumer:
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+class Customer {
+    String name;
+    int times;
+
+    Customer(String name, int times) {
+        this.name = name;
+        this.times = times;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = Integer.parseInt(sc.nextLine());
+        List<Customer> list = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            String[] p = sc.nextLine().split(" ");
+            list.add(new Customer(p[0], Integer.parseInt(p[1])));
+        }
+
+        // Predicate: chỉ nhận khách dùng >= 3 lần
+        Predicate<Customer> filterUse = c -> c.times >= 3;
+
+        // Function: tính phí, trả về Object[] để dễ chứa 3 giá trị
+        Function<Customer, Object[]> calcFee = c -> new Object[]{
+                c.name,
+                c.times,
+                c.times * 15000.0
+        };
+
+        // Comparator: sắp xếp theo phí giảm dần (phần tử thứ 2 trong Object[])
+        Comparator<Object[]> sortByFeeDesc =
+                (a, b) -> Double.compare((double) b[2], (double) a[2]);
+
+        // Consumer: in ra màn hình
+        Consumer<Object[]> printItem = arr ->
+                System.out.printf("%s %d %.2f\n", arr[0], arr[1], arr[2]);
+
+        // Áp dụng Streams
+        list.stream()
+                .filter(filterUse)
+                .map(calcFee)
+                .sorted(sortByFeeDesc)
+                .forEach(printItem);
+    }
+}
+
+Đề bài: Lọc – chuyển đổi – sắp xếp danh sách đơn hàng
+Cho danh sách đơn hàng, mỗi đơn gồm mã đơn (String) và tổng tiền (double). Hãy thực hiện các thao tác sau sử dụng Supplier, Predicate, Function và Comparator:
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+
+class Order {
+    String code;
+    double total;
+
+
+    Order(String code, double total) {
+        this.code = code;
+        this.total = total;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = Integer.parseInt(sc.nextLine());
+        List<Order> list = new ArrayList<>();
+
+
+        for (int i = 0; i < N; i++) {
+            String[] parts = sc.nextLine().split(" ");
+            list.add(new Order(parts[0], Double.parseDouble(parts[1])));
+        }
+
+
+        // Supplier: trả về danh sách đơn hàng đã nhập
+        Supplier<List<Order>> supplier = () -> list;
+
+
+        // Predicate: lọc các đơn có tổng tiền >= 500
+        Predicate<Order> filter = o -> o.total >= 500;
+
+
+        // Function: chuyển mã đơn thành dạng ORDER-<code>
+        Function<Order, Order> mapOrderCode =
+                o -> new Order("ORDER-" + o.code, o.total);
+
+
+        // Comparator: sắp xếp theo tổng tiền giảm dần
+        Comparator<Order> sortDesc =
+                (a, b) -> Double.compare(b.total, a.total);
+
+
+        // Xử lý dữ liệu bằng Stream
+        supplier.get().stream()
+                .filter(filter)
+                .map(mapOrderCode)
+                .sorted(sortDesc)
+                .forEach(o -> System.out.printf("%s %.2f\n", o.code, o.total));
+    }
+}
+
+
+Đề bài:  Phân loại nhân viên theo nhóm tuổi
+Cho danh sách nhân viên gồm tên và tuổi. Hãy thực hiện các thao tác sau bằng Java Streams, trong đó sử dụng Function, Predicate, Operator, Comparator:
+Dùng Predicate để lọc những nhân viên có tuổi ≥ 25.
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+
+class Employee {
+    String name;
+    int age;
+
+
+    Employee(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = Integer.parseInt(sc.nextLine());
+        List<Employee> list = new ArrayList<>();
+
+
+        for (int i = 0; i < N; i++) {
+            String[] parts = sc.nextLine().split(" ");
+            list.add(new Employee(parts[0], Integer.parseInt(parts[1])));
+        }
+
+
+        // Predicate: lọc tuổi >= 25
+        Predicate<Employee> pred = e -> e.age >= 25;
+
+
+        // Function: chuyển Employee -> "Tên - Tuổi"
+        Function<Employee, String> func = e -> e.name + " - " + e.age;
+
+
+        // BinaryOperator: chọn chuỗi có độ dài lớn hơn khi merge
+        BinaryOperator<String> longer = (a, b) -> a.length() >= b.length() ? a : b;
+
+
+        // Comparator: giảm dần theo tuổi
+        Comparator<Employee> cmp = (a, b) -> b.age - a.age;
+
+
+        // Xử lý bằng Stream
+        list.stream()
+            .filter(pred)
+            .sorted(cmp)
+            .map(func)
+            .collect(Collectors.toMap(
+                s -> s.split(" - ")[0],   // key = name
+                s -> s,                  // value = full string
+                longer,                  // nếu trùng key -> lấy chuỗi dài hơn
+                LinkedHashMap::new       // giữ nguyên thứ tự đã sắp xếp
+            ))
+            .values()                   // lấy danh sách chuỗi
+            .forEach(System.out::println);
+    }
+}
+
+
+Đề bài: Lọc và xử lý danh sách sản phẩm
+Cho danh sách sản phẩm gồm tên và giá tiền. Hãy thực hiện các yêu cầu sau bằng Java Streams, trong đó bắt buộc sử dụng Predicate, Function, Comparator và Consumer:
+Dùng Supplier để tạo dữ 
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+
+class Product {
+    String name;
+    double price;
+
+
+    Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+
+        int N = Integer.parseInt(sc.nextLine());
+        List<Product> inputList = new ArrayList<>();
+
+
+        for (int i = 0; i < N; i++) {
+            String[] parts = sc.nextLine().split(" ");
+            inputList.add(new Product(parts[0], Double.parseDouble(parts[1])));
+        }
+
+
+        // Supplier: lấy dữ liệu đầu vào làm nguồn
+        Supplier<List<Product>> supplier = () -> inputList;
+
+
+        // Predicate: lọc sản phẩm có giá >= 100
+        Predicate<Product> predicate = p -> p.price >= 100;
+
+
+        // Function: chuyển tên sản phẩm thành IN HOA
+        Function<Product, Product> func =
+            p -> new Product(p.name.toUpperCase(), p.price);
+
+
+        // Comparator: sắp xếp tăng theo giá
+        Comparator<Product> comparator = (a, b) -> Double.compare(a.price, b.price);
+
+
+        // Consumer: in ra sản phẩm
+        Consumer<Product> consumer =
+            p -> System.out.println(p.name + " " + String.format("%.2f", p.price));
+
+
+        // Áp dụng STREAM và các functional interface
+        supplier.get().stream()
+                .filter(predicate)
+                .map(func)
+                .sorted(comparator)
+                .forEach(consumer);
+    }
+}
+
+
+Đề bài: Thống kê điểm trung bình theo lớp học bằng Java Streams
+Cho danh sách sinh viên gồm họ tên, tên lớp và điểm trung bình (GPA). Hãy sử dụng Java Streams để:
+Nhóm sinh viên theo lớp (className).
+ import java.util.*;
+import java.util.stream.*;
+
+
+class Student {
+    String name;
+    String className;
+    double gpa;
+
+
+    Student(String name, String className, double gpa) {
+        this.name = name;
+        this.className = className;
+        this.gpa = gpa;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+
+
+        List<Student> students = Arrays.asList(
+                new Student("An", "A1", 8.5),
+                new Student("Binh", "A2", 7.2),
+                new Student("Chi", "A1", 7.8),
+                new Student("Dung", "A3", 9.1),
+                new Student("Hoa", "A2", 7.7),
+                new Student("Khanh", "A1", 8.0),
+                new Student("Minh", "A3", 8.3)
+        );
+
+
+        // Nhóm và tính GPA trung bình bằng Stream
+        Map<String, Double> avgByClass = students.stream()
+                .collect(Collectors.groupingBy(
+                        s -> s.className,
+                        Collectors.averagingDouble(s -> s.gpa)
+                ));
+
+
+        // In kết quả theo đúng định dạng, sort theo tên lớp
+        avgByClass.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .forEach(e -> System.out.printf("Lớp %s: %.2f\n", e.getKey(), e.getValue()));
+    }
+}
+
+
+
