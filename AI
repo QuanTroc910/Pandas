@@ -1,0 +1,188 @@
+CHƯƠNG 1 : TỔNG QUAN VỀ TRÍ TUỆ NHÂN TẠO 
+
+Lịch sử phát triển của trí tuệ nhân tạo: Đề cập đến các giai đoạn chính trong quá trình phát triển của trí tuệ nhân tạo.
+Hệ chuyên gia (Expert System): Hệ thống máy tính mô phỏng khả năng ra quyết định và giải quyết vấn đề của chuyên gia trong một lĩnh vực cụ thể.
+Hệ thống giải trí: Các chương trình trò chơi.
+Máy học hoặc Học máy (ML - Machine learning): Một lĩnh vực của trí tuệ nhân tạo liên quan đến việc nghiên cứu và xây dựng các kĩ thuật cho phép các hệ thống có thể "học".
+Người máy (Robot): Thuật ngữ chỉ một loại máy có thể thực hiện những công việc một cách tự động bằng sự điều khiển của máy tính hoặc các vi mạch.
+Mạng nơ ron nhân tạo (Artificial Neural Network): Một mô hình tính toán được xây dựng dựa trên các mạng nơ ron sinh học.
+Giải thuật di truyền (GA - Genetic Algorithm): Một kỹ thuật tối ưu hóa dựa trên quá trình tiến hóa tự nhiên, sử dụng các nguyên tắc của chọn lọc tự nhiên để tìm ra lời giải tốt nhất cho bài toán cần giải.
+Xử lý ngôn ngữ tự nhiên (NLP - Natural Language Processing): Một lĩnh vực của trí tuệ nhân tạo tập trung vào việc giúp máy tính hiểu, diễn giải và tạo ra ngôn ngữ của con người bao gồm cả ngôn ngữ nói và ngôn ngữ viết.
+Tiền đề cho sự phát triển của trí tuệ nhân tạo: Cơ sở nền tảng cho sự ra đời và phát triển của lĩnh vực trí tuệ nhân tạo.
+Trí tuệ con người: Đề cập tới các định nghĩa về trí tuệ con người của Alan Turing, từ điển Webster và các nhà tâm lý học.
+Trí tuệ máy: Đề cập tới dấu hiệu để nhận biết và các khả năng của trí tuệ nhân tạo.
+Trí tuệ nhân tạo (AI - Artificial Intelligence): Là một ngành của khoa học máy tính.
+
+CHƯƠNG 2 : TÁC TỬ THÔNG MINH 
+Tác tử (Agent): Bất kỳ thực thể nào có khả năng cảm nhận môi trường xung quanh thông qua cảm biến và tác động trở lại môi trường bằng các bộ kích hoạt.
+Đa tác tử (multi-agent): Một hệ thống bao gồm nhiều tác tử (agent) độc lập, tương tác với nhau để giải quyết một vấn đề chung hoặc thực hiện một nhiệm vụ nào đó.
+Môi trường (Environment): Thế giới mà trong đó tác tử tồn tại và hoạt động.
+Cảm biến (Sensor): Các thiết bị giúp tác tử thu thập thông tin từ môi trường.
+Bộ kích hoạt (Actuator): Thiết bị giúp tác tử tạo ra hành động tác động ngược lại lên môi trường.
+Hàm tác tử (Agent Function): Ánh xạ từ chuỗi cảm nhận (percepts) trong quá khứ đến hành động (action) -> Biểu diễn mối quan hệ giữa những gì tác tử cảm nhận và những gì nó làm.
+Chương trình tác tử (Agent program):  Phần mềm chạy trên phần cứng của tác tử, thực hiện hàm tác tử.
+Bảng điều khiển (Table-based Agent): Cách thiết kế đơn giản nhất, trong đó các cảm nhận được ánh xạ trực tiếp đến hành động thông qua bảng tra cứu.
+Tự trị (Autonomy): Khả năng của tác tử xác định hành vi dựa trên kinh nghiệm và tri thức của chính mình.
+Khả năng học (Learning Ability):  Năng lực giúp tác tử cải thiện hành vi qua thời gian thông qua kinh nghiệm.
+Đánh giá hiệu năng (Performance Measure): Tiêu chí xác định mức độ thành công trong quá trình tác tử thực hiện nhiệm vụ.
+Mô hình PEAS (PEAS model): Là khung mô hình gồm 4 yếu tố cần xác định khi thiết kế tác tử: Performance measure (độ đo hiệu năng), Environment (môi trường), Actuators (bộ kích hoạt), Sensors (cảm biến)
+Tác tử phản xạ đơn giản (Simple Reflex Agent): Loại tác tử đưa ra hành động dựa trên cảm nhận hiện tại, không xem xét trạng thái trước đó.
+Tác tử phản xạ có trạng thái (Model-based Reflex Agent): Lưu trữ trạng thái nội tại để xử lý những phần môi trường không thể quan sát trực tiếp.
+Tác tử hướng mục đích (mục tiêu) (Goal-based Agent): Không chỉ phản ứng mà còn xác định các mục tiêu cụ thể và lập kế hoạch hành động để đạt được mục tiêu đó.
+Tác tử hướng lợi ích (Utility-based Agent): Xem xét không chỉ mục tiêu đạt được mà còn lựa chọn phương án hành động tối ưu theo mức độ “có lợi” (utility).
+Tác tử có khả năng học (Learning Agent): Tác tử có khả năng điều chỉnh hành vi của mình dựa trên kinh nghiệm, tự cập nhật tri thức và chiến lược để cải thiện hiệu quả.
+Tính quan sát được (Observability): Chỉ mức độ mà tác tử có thể nhận biết đầy đủ về trạng thái của môi trường từ các cảm biến.
+Tính xác định (Determinism): Môi trường là xác định nếu trạng thái kế tiếp hoàn toàn được xác định bởi trạng thái hiện tại và hành động của tác tử.
+Tính động (Dynamics): Cho biết môi trường có thay đổi trong khi tác tử đang hoạt động hay không.
+Tính rời rạc và liên tục (Discrete vs. Continuous): Môi trường là rời rạc nếu có số lượng trạng thái rõ ràng, rành mạch. Là liên tục nếu trạng thái và hành động thay đổi mượt mà, không phân định rõ ràng.
+
+CHƯƠNG 3 : GIẢI QUYẾT VẤN ĐỀ BẰNG TÌM KIẾM 
+
+1. Giải quyết vấn đề và khoa học trí tuệ nhân tạo 
+Giải quyết vấn đề : Là quá trình giải quyết bài toán trong trí tuệ nhân tạo 
+Các phương pháp giải quyết vấn đề:
+    Phương pháp tính toán nhờ giải thuật 
+    Tìm kiếm heuristic
+    Dùng phương pháp thử và sai 
+    Dùng phương pháp nhánh cận 
+Sơ đồ giải quyết vấn đề : Các thành phần để giải quyết vấn đề 
+Giải quyết vấn đề của con người:
+2. Quá trình giải quyết thông tin của con người : Hệ thống cảm nhận , hệ thống nhận thức và hệ thống hành động 
+Cách giải quyết vấn đề của con người : 4 chiến lược 
+    Chiến lược 1 : ước lượng vấn đề xem độ phức tạp 
+    Chiến lược 2 : Nới lỏng 1 vài ràng buộc 
+    Chiến lược 3 : Chia bài toán lớn thành các bài toán con 
+    Chiến lược 4 chuyển các thông tin thành các ký hiệu làm cho bài dễ hiểu dễ giải hơn 
+3. Phân loại vấn đề 
+  Vấn đề phát biểu chỉnh : Thỏa mãn điều kiện 
+    Đích được đặt ra 
+    Biết trạng thái ban đầu 
+    Xác định được các thao tác 
+    Có thể nhận biết được 1 lời giải bài toán 
+  Vấn đề phát biểu không chỉnh Thỏa mãn các điều kiện 
+    Đích đặt ra không tường minh 
+    KGBT rời rạc 
+    KGBT vô hạn 
+    Các thao tác không được chỉ ra 
+    Không ràng buộc về mặt thời gian 
+4. Các thành phần cơ bản của giải quyết vấn đề 
+Giải quyết vấn đề là trường hợp riêng của riêng của xử lý thông tin gồm 4 thao tác:
+    Thao tác 1 : Xác định đích 
+    Thao tác 2 : Xác định sự kiện và các luật có liên quan tới đích 
+    Thao tác 3 : Rút gọn để giải quyết vấn đề đỡ phức tạp hơn 
+    Thao tác 4 : Sử dụng các suy diễn phù hợp để đạt được đích mong muốn 
+Giải quyết vấn đề là truyền thống : 
+  Chương trình = CTDL + Giải thuật ( truyền thống )
+  Chương trình =  tri thức + suy diễn (TTNT)
+Giải quyết vấn đề là các chiến thuật điều khiển , tìm kiếm:
+    Xử lý cạnh tranh 
+    Kỹ thuật heuristic : Quay lui , hàm đánh giá 
+5. Các phương pháp biểu diễn vấn đề 
+Biểu diễn bằng không gian trạng thái : 
+    Mỗi vấn đề được biểu diễn bằng trạng thái S , Trạng thái ban đầu là S0 trạng thái đích là S* các toán tử biến trạng thái Si thành trạng thái Si+1
+Quy bài toán thành các bài toán con:
+    Tách 1 bài toán thành các bài toán con sao cho tập     lời giải của các bài toán con xác định lời giải của bài toán ban đầu 
+Biểu diễn bằng logic hình thức 
+    Đôi khi nhờ giải quyết logic thì có thể chứng tỏ rằng 1 bài toán nào đó có thể giải được hay không Hoặc xem 1 trạng thái có phải là đích hay không 
+Biểu diễn bằng đồ thị 
+    Đồ  thị có hướng G = (V,E) V là tập đỉnh ,  E là tập cung 
+6 . Giải quyết vấn đề bằng tìm kiếm 
+6.1 Biểu diễn vấn đề trong không gian trạng thái 
+    ta ký hiệu không gian trạng thái là U , trạng thái ban đầu là u0 ( u0 thuộc U ) 
+6.2 Các chiến lược tìm kiếm 
+    Tìm dạng biểu diễn thích hợp của bài toán . Xác định trạng thái ban đầu , tập toán tử và tập kết thucs  . Như vậy khi biểu diễn vấn đề bằng các trạng thái thì tìm lời giải của vấn đề được quy thành tìm đường đi từ trạng thái ban đầu tới trạng thái kết thúc nào đó 
+Các chiến lược tìm kiếm 
+    Tìm kiếm mù : Không có sự hướng dẫn cho việc tìm kiếm , phát triển các trạng thái ban đầu cho tới khi gặp trạng thái đích nào đó . Có 2 kỹ thuật là tìm kiếm theo chiều rộng và tìm kiếm theo chiều sâu 
+    Tìm kiếm heuristic : Sử dụng các tri thức đánh giá trạng thái , trong quá trình phát triển ta chọn trạng thái tốt nhất để phát triển trong các trạng thái trờ gọi là phương pháp tìm kiếm heuristic 
+Cây tìm kiếm: Thể hiện quá trình tìm kiếm , các đỉnh được gắn với trạng thái của KGTT . → Mỗi chiến lược tìm kiếm có một cây tìm kiếm tương ứng 
+6.3 Các chiến lược tìm kiếm mù 
+    Tìm kiếm theo chiều rộng : ngăn xếp ( queue ) : Tại mỗi bước ta sẽ trọn trạng thái để phát triển là trạng thái được sinh ra trước các trạng thái chờ phát triển khác 
+    Tìm kiếm theo chiều sâu : hàng đợi (Stack) : Taij mỗi bước chờ phát triển , trạng thái được phát triển là trạng thái sinh ra sau cùng trong các trạng thái trở phát triển 
+6.4: Đồ thị và hoặc và tìm kiếm trên đồ thị và hoặc ( OR , AND ) 
+KN : Quy vấn đề thành các vấn đề con biểu diễn trên đồ thị có hướng đặc biệt được gọi là đồ thị và hoặc 
+Xây dựng đồ thị và hoặc : Quá trình tạo ra đồ thị từ tập KGTT gồm trạng thái ban đầu , trạng thái kết thúc và tập các toán tử . Đối với các toán tử quy về một số bài toán con thì chẳng hạng R : a → b,c,d thì ta đưa và 1 đỉnh con a1 . a →a1→{b,c,d}. Đồ thị rút gọn của đồ thị và hoặc thì không có a1
+Cây nghiệm : Cho lời giải của bài toán theo một tập các toán tử con nào đó , các lá của cây là các đỉnh kết thúc 
+Đỉnh giải được : Các đỉnh kết thúc là các đỉnh giải được , u không là đỉnh kết thúc thì các đỉnh kề u giải được ( đỉnh con của u ) thì u giải được 
+Đỉnh không giải được : Ngược lại với định giải được . vẫn được xác định đệ quy theo các đỉnh giải được 
+Tìm kiếm trên đồ thị và hoặc : sử dụng kỹ thuật tìm kiếm theo chiều sâu trên đồ thị để đánh giá các đỉnh GD hay KGD . Các định này sẽ được đánh dấu theo định nghĩa đệ quy . Sử dụng hàm đánh giá đệ quy Solvable 
+6.5 : Các kỹ thuật tìm kiếm heuristic 
+Hàm đánh giá và tìm kiếm heuristic:
+    hàm đánh giá : Sử dụng kinh nghiệm để đánh giá các trạng thái sự gần tới đích của các trạng thái 
+    Tìm kiếm heuristic : sử dụng hàm đánh giá để hướng daanx sử tìm kiếm 
+TÌm kiếm tốt nhất đầu tiên:
+    Ý tưởng : Bằng tìm kiếm theo chiều rộng + hàm đáng giá 
+Tìm kiếm theo chiều sâu:
+    Ý tưởng : Bằng tìm kiếm theo chiều sâu + hàm đánh giá  
+6.6 : Các kỹ thuật tìm kiếm tối ưu 
+Kỹ thuật giải quyết vấn đề bằng tìm kiếm trên đồ thị sử dụng hàm đánh giá đường đi ngắn nhất qua một đỉnh U gọi là F(u) = G(u) + H(u)
+G là đánh giá đường đi ngắn nhất tới đích 
+H là đường đi ngắn nhất tới U 
+  + Thuật toán A* = Kỹ thuật tìm kiếm tốt nhất đầu tiên + hàm đánh giá F(u) 
+  + Thuật toán nhánh cận : Tìm kiếm leo đồi + f(u) 
+
+CHƯƠNG 4 : LOGIC MỆNH ĐỀ VÀ CHỨNG MINH TỰ ĐỘNG 
+4.1 Biểu diễn tri thức 
+Mệnh đề : Là phát biểu khẳng định tính đúng hoặc sai 
+Câu : Được cấu tạo từ những ký hiệu sơ cấp theo các luật sau : Tất cả các ký hiệu mệnh đề , ký hiệu chân lý .. đều là câu . Câu hợp lệ được gọi là công thức 
+Biểu thức Được tạo từ những ký hiệu hợp lệ thông qua một dãy các luật ( phép toán ) cho phép 
+Tri thức : Được mô tả dưới dạng các câu , gồm 2 phần:
+Cú pháp : các ký hiệu và các luật xây dựng công thức 
+Ngữ nghĩa : Xác định ý nghĩa của câu ở thế giới thực 
+Cơ chế suy diễn : một luật suy diễn cho phép suy diễn một công thức từ một tập các công thức khác 
+Ngôn ngữ biểu diễn tri thức = cú pháp + ngữ nghĩa + cơ chế suy diễn 
+
+CHƯƠNG 6 HỌC MÁY 
+1. Giới thiệu chung 
+K/n : Học máy là ngành KHNC các thuật toán cho phép máy tính hiểu được khái niệm 
+Phương pháp học máy:
+    Phương pháp quy nạp : Học nhờ dữ liệu có trước 
+    Phương pháp suy diễn : Học nhờ các luật 
+Các ngành khoa học liên quan : Lý thuyết thống kê, phương pháp tính , khoa học máy tính 
+Các nhóm giải thuật học máy:
+    Học có giám sát : Máy được xem các mẫu đầu vào và đầu ra tương ứng 
+    không giám sát : Chỉ được xem dữ liệu đầu vào rồi đoán 
+    Học bán giám sát : Lai giữa 2 cái trên 
+    Học tăng cường : Máy tính đưa ra quyết định và nhận phản hồi từ môi trường sau đó sửa cách ra quyết định và hành động 
+Biểu diễn bài toán học máy : Biểu diễn bởi bộ 3 ( T P E ) : T là dự đoán , P là sác xuất , E là kinh nghiệm 
+1.3 Kiến trúc hệ thống học máy 
+  Pha huấn luyện(train) : Chọn bộ thuộc tính đặc trưng 
+  Pha kiểm tra (test)
+  Lựa chọn các mẫu học 
+  Xác định mục tiêu cần học 
+  Lựa chọn cách biểu diễn hàm mục tiêu 
+  Chọn phươg pháp các học máy có thể học được hàm  mục tiêu 
+1.5 Vấn đề quá khớp và kém khớp 
+    Vấn đề overfitting ( quá khớp ) với 1 tập học nếu h’ kém phù hợp ( đạt độ chính xác kém hơn h ) . Độ phức tạp của h’ đạt độ chính xác cao hơn h 
+    Nguyên nhân : Lỗi trong tập dữ liệu , số lượng các mẫu quá nhỏ , chức năng mô hình quá phức tạp và nhiều tham số 
+    Vấn đề underfitting: mô hình quá đơn giản không giảm thiểu đáng kể giá trị lỗi nên không mô tả được xu hướng dữ liệu 
+2. Mạng nơ ron nhân tọa : ANN - Artificial Neural Network:
+K/n: Mạng nơ-ron nhân tạo được cấu tạo từ các "nút" (đóng vai trò là các nơ-ron hay đơn vị xử lý) được kết nối với nhau thông qua các "liên kết". Trong đó, sẽ có những nơ-ron làm nhiệm vụ giao tiếp với môi trường bên ngoài (đóng vai trò là đầu vào nhận dữ liệu và đầu ra trả kết quả). 
+Có 3 dạng kích hoạt phổ biến 
+    Step : 1 nếu x >=0 , 0 nếu x <0 hoặc thay không bằng nuy 
+    Hàm dấu : 1 nếu x>=0 , -1 nếu x<0 hoặc hay x bằng nuy 
+    Hàm sigmoid 1/(1+e mũ - an pha x - an pha nuy) 
+    AND/OR/NOT là 1.5 , 0.5 , -0.5 
+Phân loại theo kiểu liên kết nơ-ron:
+  Theo kiểu liên kết
+    Truyền thẳng (Feed-forward): Tín hiệu đi một chiều, không tạo vòng lặp (đồ thị DAG).
+  Hồi quy (RNN): Có vòng lặp (feedback) giúp lưu giữ trạng thái nội bộ, tối ưu cho dữ liệu chuỗi (văn bản, tiếng nói).
+    Theo tổ chức lớp (Tầng)
+    Nguyên tắc: Nơ-ron xếp theo lớp, chỉ nối với lớp kế tiếp.
+    Quy tắc "3 Không": Không nối cùng lớp, không nối ngược, không nhảy lớp.
+Mạng nơ ron 1 lớp : Mạng Hopfiled , Percentron 
+Mạng Perceptron (1 lớp)
+    Định nghĩa: Là mạng truyền thẳng (Feed-forward) đơn giản nhất.
+    Cơ chế: Tính tổng trọng số đầu vào, dùng hàm bước nhảy để phân loại (0 hoặc 1).
+    Ứng dụng: Phân loại tuyến tính (như hàm logic AND, OR).
+    Hạn chế: Không giải được các bài toán phi tuyến (như hàm XOR).
+Mạng Hopfield
+    Định nghĩa: Là mạng hồi quy (Recurrent) với các liên kết đối xứng.
+    Cơ chế: Hoạt động dựa trên mức năng lượng; tự điều chỉnh về trạng thái ổn định để khôi phục dữ liệu gốc từ đầu vào nhiễu.
+    Ứng dụng: Làm "bộ nhớ kết hợp" (nhận dạng lại khuôn mặt hoặc mẫu chữ bị mờ).
+    Đặc điểm: Các nơ-ron kết nối lẫn nhau và có vòng lặp phản hồi.
+3. LOGIC MỜ 
+Định nghĩa: Tập mờ (Fuzzy Set) là sự mở rộng của tập hợp cổ điển, trong đó một phần tử không chỉ đơn thuần là "thuộc" hoặc "không thuộc".
+Hàm thuộc (Membership Function): Mỗi phần tử trong tập mờ có một giá trị thuộc nằm trong khoảng [0, 1].
+  0: Hoàn toàn không thuộc tập hợp.
+  1: Hoàn toàn thuộc tập hợp.
+Khoảng (0, 1): Thuộc về tập hợp ở một mức độ nhất định.
