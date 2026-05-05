@@ -1,0 +1,379 @@
+CHƯƠNG 1 TỔNG QUAN VỀ QUẢN TRỊ MẠNG 
+1.1 Giới thiệu chung 
+  Quản trị mạng là dùng các công cụ , ứng dụng và thiết bị khác nhau để duy trì hoạt động mạng 
+  Khi mạng mở rộng cần quản trị vận hành để đảm bảo an ninh , nâng cấp về sau 
+1.2 Các tác vụ quản trị mạng 
+5 Lĩnh vực chính của công tác quản trị mạng ( do IOS đề suât )
+  +Fault Management  
+  +Configuration Management  
+  +Accounting Management  
+  +Performance Management  
+  +Security Management
+Configuration Management :  thu thập và theo dõi hệ thống mạng cả phần cứng và mềm 
+Fault Management  : Phức tạp nhất , nhiệm vụ là phát hiện , ghi nhận và thông báo lỗi. Quy trình bao gồm xác định lỗi , khắc phục lỗi, ghi lại vấn đề và giải pháp 
+Performance Management: Đo lường băng thông , … mục tiêu duy trì hiệu năng mức có thể truy cập được . Quy trình : Thu thập data hiệu năng , phân tích , thiết kế các ngưỡng cho giá trị quan trọng 
+Security Management: Đảm bảo tài nguyên , ngăn chặn truy cập bất hợp pháp . Quy trình : Định danh tài nguyên, xác định tài nguyên nhạy cảm và quyền truy cập , theo dõi truy cập của user 
+Accounting Management: Báo cáo về qtm và cấp phát tài nguyên . Quy trình : đo sử dụng của tài nguyên mạng , phân tích , thiết lập hạn mạch sử dụng tài nguyên 
+1.3 Hệ thống quản trị mạng 
+  Mô hình : thực thể quản trị(hệ thống , ud) và thực thể được quản trị (tài nguyên)
+1.4 Giao thức quản trị mạng đơn giản SNMP 
+Poll và Alert : 2 phương thức cơ bản của kỹ thuật giám sát hệ thống ( Poll và Trap or Get và Trap là 2 tên khác) 
+Nhiều phần mềm và giao thức đc xd dựa trên cái này ( VD: SNMP)
+Poll : manager hỏi device liên tục(đinh ky) nên luôn cập nhập được thông tin mới nhất 
+Alert : Device xảy ra 1 sự kiện nào đó thì tự thông báo cho manager luôn( Mạng sập dễ mất tin, cấu hình cực , real time  ) 
+Giao thức SNMP : Giao thức quản trị mạng đơn giản : Cho phép giám sát và truyền tin từ các tác nhân tới trạm quản trị  (NMS)
+  3 phiên bản  SNMP v1: 1990  SNMP v2: 1996  SNMP v3: 2003  
+  Sử dụng giao thức vận chuyển UDP:  Port 161: polling  Port 162: trapping
+  1 số khả năng : theo dõi tốc độ đường truyền , lấy thông tin từ máy chủ , tự động nhận cảnh báo khi 1 port bị down , Điều khiển tắt các port 
+  Được trên nền TCP/IP quản lý các thiết bị kết nối mạng TCP/IP 
+  SNMP được thiết kế đơn giản trừ cái v3 
+  SNMP sử dụng kiến trúc phân tán gồm hệ quản trị và các tác nhân 
+  Máy chủ đặt ở trung tâm gọi là NMS , nốt mạng là tác nhân SNMP
+    Trạm quản lý  mạng : thg là 1 máy tính chạy phần mềm quản lý, dùng để giám sát và điều khiển 
+    Các thành tố mạng (network element) : Các thiết bị phần mền tg thích SNMP đc quản lý bởi trạm quản lý mối quan hệ giữa 2 cái đó là nhiều nhiều 
+  2 Chế độ hoạt động : Polling gửi yêu cầu truy suât thông tin cổng 161, Trapping gửi tt cảnh báo cổng 162 
+Một số thuật ngữ khác của SNMP 
+    Object ID : 1 thiết bị cung  cấp nhiều tt khác nhau , mỗi thông tin là 1 object ( Nhận dạng là Object ID hay là OID) 
+    Đóng gói SNMP MESSAGE: Được đóng gói trong UDP - IP -Link header
+Cấu trúc SMNP MESSAGE = version + community string + SNMP PDU 
+Các phương thức của SNMP : 5 phương thức, tương ứng 5 loại bản tin mỗi bản tin đều chứa OID cho bt object đó mang gì 	
+  GetRequest: Manager gửi GetRequest cho agent để yêu cầu agent cung cấp thông tin nào đó dựa vào ObjectID (trong GetRequest có chứa  OID) 
+  GetNextRequest :Manager gửi GetNextRequest có chứa một ObjectID cho agent để yêu cầu cung cấp thông tin nằm kế tiếp ObjectID đó trong MIB. 
+  SetRequest :  Manager gửi SetRequest cho agent để đặt giá trị cho đối tượng của agent dựa vào ObjectID 
+  GetResponse : Agent gửi GetResponse cho Manager để trả lời khi nhận được GetRequest/GetNextRequest 
+  Trap: Agent tự động gửi Trap cho Manager khi có một sự kiện xảy ra đối với một object nào đó trong agent 
+Minh họa SNMPv1 : 
+      Phương thức Get/Set/Response thì SNMP Agent lắng nghe ở port UDP 161.
+     Phương thức trap thì SNMP Trap Receiver lắng nghe ở port UDP 162.
+Cơ chế bảo mật cho SNMP : manager có thể quản lý nhiều element thông qua gửi request và nhận Trap . Cơ chế gồm có 
+  Community string : 3 loại Read-community( Get request, get next request)  , Write community( Set request) , trap community 
+  View : Khi manager có read - communyti thì có thể đọc toàn bộ OID , tập con MIB gọi là view , trên agent có thể định nghĩa nhiều view . 1 view gắn liến với community string 
+  SNMP access control list : Để ngăn chặn SNMP manager không được phép . SNMP ACL là 1 danh sách các IP được phép quản lý và đc cài ở agent 
+
+
+CHƯƠNG 2 : QUẢN TRỊ THIẾT BỊ MẠNG 
+2.1 Bộ định tuyến ( Router)
+2.1.1 Chức năng của Router 
+  Hoạt động tâng 3 mô hình OSI 
+  Kết nối nhiều mạng với nhau
+  Quản lý lưu lượng truyền dựa vào IP 
+  Chức năng chính : tìm đường đi ( định tuyến ) 
+  Chức năng khác : kiểm soát nghẽn , quản lý địa chỉ mạng , quảng trị , giám sát …
+2.1.2 Các thành phần chính của Router 
+  Các thành phần bên trong : CPU, ROM , RAM , Flash( Lưu hệ điều hành  như SSD)  , NVRam (HDD) 
+  Các thành phần bên ngoài : LAN , WAN , Console/Aux
+  Router cần HDH để chạy các tập tin cấu hình , và sử dụng giao thức định tuyến
+  Interface là nơi router kết nối ra bên ngoài : Có 3 loại cổng : LAN , WAN , AUX
+2.1.3 Các loại cáp và các loại kết nối:
+  Kết nối PC vào console trên router ( Cáp rollover và bổ chuyển đổi RJ45 ) 
+  Kết nối với cổng LAN : FastEthenet hoặc GagiEthenet ( thông qua switch / hub cáp thẳng hoặc chéo )
+     cứ cổng serial thì cáp serial, máy tính nối switch và switch nối router là cáp thẳng còn lại chéo hết , com thì rollover 
+  Kết nối với cổng WAN : hầu hết đều là cổng serial ( 3 loại thường được thuê là kênh thuê riêng , chuyển mạch kênh và chuyển mạch gói )
+2.1.4 Hệ điều hành CISCO IOS 
+  Được cài trên cisco của router và catalyst của switch 
+  Cung cấp các dịch vụ như : định tuyến , bảo mật , mở rộng 
+  Khởi động router : 
+    Router khởi động bằng cách tải bootstrap , HDH và tập tin cấu hình . Không tìm thấy tập tin cấu hình thì tự vào chế độ cài đặt ( setup mode) 
+    Hoàn tất cấu hình thì được lưu vào NVRAM 
+    Quá trình khởi động OSI gồm 3 phần : kiểm tra phần cứng , tìm và tải OSI , thực hiện 
+2.2 Các giao thức định tuyến 
+2.2.1 Khái niệm định tuyến 
+  Định tuyến : xác định đường đi tối ưu 
+  Router cần phải biến được thông tin mangj đích đến 
+  Thông tin mạng đích và đường đi tối ưu đc lưu trong bảng định tuyến 
+2.2.2 Giao thức định tuyến : Ngôn ngữ giao tiếp giữa các router 
+  Cho phép chia sẻ thông tin về các network → Xây dựng bảng định tuyến 
+  2 loại cơ bản : định tuyến động ( bảng định tuyến bởi router ) , tĩnh(  thủ công ) 
+  Chọn đường đi theo 2 thuật toán 
+    Distence vector : hướng và k/c tới đích 
+    Link state : Cấu trúc toàn mạng và trạng thái các đường liên kết 
+  Chức năng: Duy trì bảng định tuyến 
+  3 bước trong quá trình xây dựng và duy trì bảng định tuyến 
+    Các giao thức định tuyến gửi các thông tin cập nhật về Routers hoặc về mạng bên trong vùng tự trị
+    bảng cập nhật và cung cấp thông tin theo yêu cầu 
+    Quá trình chuyển gói xác định đường đi 
+  Vùng tự trị (AS) : bao gồm các mạng con kết nối bởi router 
+  bảng định tuyến : chức các thông tin mạng đích có thể có 1 cái mặc định 0.0.0.0 x2
+  Khoảng cách quản trị AD : đánh giá độ tin cậy của thông tin định tuyến từ router láng riềng , từ 0 - 255 . 0 là cao nhất 
+  Metric định lượng 1 mức độ tối ưu của đường đi , càng nhỏ thì càng tối ưu 
+  Sự hội tụ mạng ( convergence ) : đưa các trạng thái định tuyến vào trạng thái đồng nhất , thời gian là thời gian cần thiết để chia sẻ thông tin và cho R tính toán 
+  Cân bằng tải (Load balancing) : là để dùng băng thông hiệu quả và và tuyến dự phòng 
+2.3 Phần mềm mô phỏng Packet tracer 
+  Chọn công cụ Add Simple PDU để tiến hành kiểm tra quá trình gửi và nhận giữa các thiết bị 
+2.4 Cấu hình và quản trị Router 
+  Giao diện dòng lệnh CLI : Cisco sử dụng giao diện dòng lệnh CLI 
+  Giao diện này sử dụng cấp trúc phân cấp : muốn cấu hình cái gì thì vào chế độ tương ứng 
+  Trình thông dịch của CLI là EXEC 
+    User EXEC mode : chế độ người dùng chỉ đc hiện thị thôi dấu nhắc là > 
+    Privileged EXEC mode : all câu lệnh dấu nhắc là router#
+    Configuration mode : từ đặc quyền rồi mới truy cập vào được và vào cấu hình  
+    riêng biệt hơn : Router(config) #
+    Router > + enable ra router #  + configure terminal ra router(config) # + interface ra thêm dấu if + interface ra subif	
+    Ctr z = exit = log out 
+    Để ra khỏi user Exec mode gõ continue 
+  Đặt tên cho Router: Router(config)# hostname name 
+  Lưu cấu hình vào NVRAM Router#copy running-config startup-config
+  MÃ HÓA PASSWORD: 
+  service password encryption
+  enable password abc123
+  line console 0
+  password abc1234
+
+  Router(config-if)# ip address 192.168.20.1 255.255.255.0
+  Trong CLI, tập tin nằm trong bộ nhớ RAM  : Router#show running-config 
+  Định tuyến tĩnh ip route mạnh đích   cổng vào mạng do 
+  Định tuyến động RipV2 : router rip / version 2 / network       	network_ip  
+  Định tuyến động OSPF (dijkstra) 
+
+
+CHƯƠNG 3 : QUẢN TRỊ MẠNG ( NETWORK ADMINISTRATOR)
+3.1 Giới thiệu về Window Server 
+  Được phát triển bởi Microsoft, cung cấp dịch vụ quản lý hạ tầng mạng 
+  Cung cấp ứng dụng và dịch vụ mạng cho tổ chức 
+  Phân biệt mô hình workgroup và Domain 
+  Workgroup : mạng peer to peer , các máy tính có vai trò như nhau , không có máy tính chuyên cung cấp dịch vụ , mạng nhỏ < 10 mt , dl phân tán cục bộ . Các máy tính sử dụng HDH lưu     dữ liệu  thông tin người dùng  trên tập SAM. System 32  
+  Mô hình Domain : Hoạt động cơ chế client - Server 
+    Hệ thống phải có ít nhất 1 máy điều khiển toàn bộ hệ thống mạng 
+    Việc chứng thực người dùng và quản lý tài nguyên được tập trung tại các server trong domain
+Các thông tin người dùng do Ad quản lý và lưu trong tệp NTDS.DIT 
+Một số thuật ngữ 
+  Stand - alone : máy tính chạy HDH server , nhưng kh tham gia domain cx kh là domain control
+  Member server : có tham gia domain nhưng không là domain control
+
+3.2 Quản trị Active Dicrectory 
+3.2.1 Khái niệm AD 
+  Là kiến trúc độc quyền của Microsoft , là dịch vụ thư mục không thể thiếu để quản lý tập trung tất cả các đối tượng …
+  Ưu : Quản lý tập trung , bảo mật dữ liệu , chính sách nhóm , mở rộng , ủy quyền 
+3.2.2 Các thành phần trong Directory service 
+  Gồm : Objects , attribute , schema , Container 
+  Object : máy trạm , in , server , người dùng , thư mục , dịch vụ mạng 
+  Attribute : mô tả một đối tượng : Máy in , máy trạm đều có thuộc tính IP 
+  Schema : Cấu trúc tổ trức : Định nghĩa các đối tượng và các thuộc tính để lưu dữ liệu , là danh bạ của AD 
+  Container : Là đối tượng mặc định được dùng để nhóm các đối tượng tương tự lại với nhau , không có quyền bảo mật riêng và có thể chứa các đối tượng khác và container khác 
+3.2.3 Kiến trúc AD 
+  AD schema được định nghĩa bởi : Schema class object , schema attribute objects 
+  Kiến trúc AD logic : 
+    Domain : Cốt lõi của AD là domain , nơi lưu hàng triệu đối tượng 
+    AD được kiến tạo bới 1 or nhiều domain  
+    truy xuất vào domain được quản trị thông qua Access control list
+    OU là một container để tổ chức cái đối tượng 
+    Trees : 1 tập hợp nhiều domain 
+    Forest : Là tập hợp nhiều domain có mối quan hệ tin cậy 
+  Kiến trúc AD vậy lý : 
+    Site : Vị trí địa lý của các domain trong hệ thống 
+    Domain control ( DC) là máy tính để setup Window Server , có bản sao AD , chịu trách nhiệm phản hồi và yêu cầu , xác thực người dùng 
+3.2.4 Quản trị AD 
+  AD DS cung cấp các chức năng giải pháp xác nhận và truy cập (IDA) cho mạng 
+  IDA có nhiệm vụ duy trì an ninh cho tài nguyên , ứng dụng và CSDL 
+  Cơ sở hạ tầng của IDA gồm : 
+    Lưu trữ thông tin object
+    Xác thực đối tượng định danh 
+    Điều khiển truy cập 
+    Lưu vết 
+LAP 2 : Cài AD 
++Cài IP tĩnh , tắt DHCP , trọn role , next, next  install( Promote this serer to a domain controller) 
++Thăng cấp server thành 1 DC chọn add a new forest 
++Cấu hình DNS server 
+  Forward Lookup Zones phân giải tên sang IP 
+  Reverse Lookup Zones  phân giải IP sang tên 
+  Vào Forward Lookup Zones: Tích chọn Update associated pointer (PTR) record 
+  Cách 2: Vào Reverse Lookup Zones : Tạo 1 pointer PTR để tham chiếu tới HostA 
+  Forward DNS ra bên ngoài:  client sẽ hỏi bản ghi trong DC. Trong DC ko có bản ghi này sẽ sẽ Forward ra bên ngoài để hỏi DSN 
+
+LAP 3 : Kết nối 1 máy trạm vào domain 
+LAP : Thực hành cài đặt và cáu hình AD DS 
+Thiết lập mô hình quản trị  
+Nâng cấp server thành DC (promoting)  
+Cấu hình máy chủ DC  
+Kết nối máy trạm vào domain  
+Xây dựng DC đồng hành  
+Hạ cấp DC thành Stand-alone (demoting)  : READ-ONLY DOMAIN CONTROLLER 
+Cài đặt cấu hình RODC 
+  User(yêu cầu xác thực) RODC (gửi pass) DC 
+  Cách xác thực như trên có hiệu quả?  Không: 
+  vì lưu lượng truyền thông giữa các DC tăng lên.  Giải pháp: Kích hoạt Credential Caching. Hoạt động của Credential Caching: Lưu lại mật khẩu của user đã chứng thực thành công.  
+  RODC có Read-only DNS dùng để phân giải tên: Không cập nhật DNS record vào CSDL 
+
+
+3.3 Quản lý tài khoản người dùng và nhóm 
+3.3.1 Tài khoản người dùng 
+  Không gian tên : là nơi mà tên có thể phân giải. Không gian tên AD dựa trên không gian tên của DNS 
+  Phân giải tên là chuyển đổi từ tên thành các đối tượng hay các thông tin 
+  Quy tắc đặt tên : mỗi đối tượng có một tên khác nhau 
+  AD hỗ trợ truy vấn theo thuộc tính 
+  RDN là một phần của tên , có thể là 1 thuộc tính của đối tượng 
+  Dùng công cụ AD used and computer để quản lý tài khoản và máy tính 
+  Tài khoản người dùng : để user đăng nhập vào máy hay domain 
+    Công dụng : Authentication – Xác thực , Authorization – Cấp quyền 	Auditing – Kiểm toán, kiểm tra 
+    Phân loại : Local user account , Domain user account 
+  Local user account : Tạo tài khoản cục bộ với công cụ Local Users and Group trong Computer Management (COMPMGMT.MSC) . chỉ được phép truy cập tài nguyên trong máy đó , đươcj lưu trữ trong tệp cơ sở SAM . Muốn truy cập bên ngoài thì cần chứng thực Computer  → Manager →System tools → Local User and Group. Computer management  nhấn add  Local computer FinishOKSystem tools  Local User and Group . RUN gõ  lusrmgr.msc 
+  Domain user account : 
+    Được tạo ra trên 1 domain control , đăng nhập vào mạng trên bất kỳ máy trạm nào đc tạo ra bởi Active Directory Users and Computer (DSA.MSC) . chứ trong tập NTDS.DIT 
+3.3.2 Tài khoản nhóm 
+  Là một đối tượng đại diện cho 1 nhóm nào  đó , giúp dễ dàng cấp quyền các tài nguyên 
+  Tài khoản nhóm không được phép đăng nhập vào mạng mà chỉ để dùng quản lý 
+  Tài khoản nhóm có 2 loại : Nhóm an ninh (Security Group), Nhóm phân phối (Distribution Group) 
+  Khi thêm 1 user vào 1 Group nếu user đó đang ở trong mạng thì các quyền củaGroup mới đối với user đó chỉ có tác dụng ở lần đăng nhập sau. 
+  Thành viên Group có quyền của Group,  User có thể là thành viên của nhiều Group , và có thể lồng group 
+  Group an ninh : gán quyền truy nhập tài nguyên .Được chỉ định SID (Security Identifier) 
+  Group phân phối (Distribution Group) : Không gán quyền , không có SID , không xuất hiện ACL 
+  Phạm vi : 4 loại : Cục bộ (Local) Toàn thể (Global)- all  Cục bộ domain (Domain Local) Phổ quát (Universal) - nhiều cục bộ tin cậy với nhau 
+  Quy tắc gia nhập nhóm : Nhóm to được đặt vào chính nó và các nhóm bé  hơn 
+3.3.3 Chứng thực và kiểm soát truy cập 
+  Ad là dịch vụ dựa trên các đối tượng 
+  Chức năng : định rõ quyền sở hữu , các sự kiện xảy ra , cấp quyền ..
+  1 ACL có nhiều ACE 
+  ACL là danh sách tất cả người dùng , nhóm và quyền 
+  ACL có tính kế thừa 
+3.3.4 các tài khoản tạo sẵn (Built - in ) 
+  tài khoản người dùng có sẵn: Được tạo ra  mặc định khi cài windown server không thể xóa nhưng được đổi tên
+  tài khoản nhóm có sẵn : nằm trong container user , không đc sang OU khác, được gán các quyền cố định 
+3.3.5 Quản lý Organization unit (OU) 
+  giảm tải công việc cho người quản trị bằng cách quy quyeefn 
+  Tạo đơn vị OU bàng AD user and computer 
+  Thêm các đối tượng vào OU rồi ủy quyền quản lý 
+  Di chuyển OU 
+
+3.4 Chính sách hệ thống và chính sách nhóm 
+3.4.1 Chính sách hệ thống (System policy)
+  Chính sách tài khoản người dùng : Dùng để chỉ định các thông số về tài khoản người dùng 
+  Trên máy trạm:  Windows + R , gõ secpol.msc 
+  Trên Windows Server làm DC : Server manager  Tools  Local Security Policy 
+  Account lockout Policy: các chính sách khóa tài khoản : threshold ngưỡng khóa ,duration Khóa trong bao nhiêu phút 	
+  Chính sách cục bộ 
+    Audit policy : Chính sách kiểm toán 
+3.4.2 Chính sách gom nhóm ( Group policy ) 
+  Chỉ suất hiện trong hệ thống AD 
+  Cung cấp tính năng quản lý , bảo mật vượt trội 
+  Có thể triển khai ở nhiều cấp 
+  Chính sách nhóm được nhiều điều hơn chính sách hệ thống . cs hệ thống chỉ áp dụng khi đăng nhập vào mạng , cs nhóm thì khi bật máy lên 
+  Đn : là tập hợp các cấu hình tác động lên nhiều đối tượng 
+  Mục đích : quản lý môi trường làm việc , quản lý tập trung 
+  Các loại chính sách gom nhóm 
+  Các thiết lập chính sách gom nhóm được lưu trên GPO ( áp đặt các đối tượng trong hệ  thống  là user và computer
+  Để cấu hình GPO dùng : Group PolicyObject Editor 
+  Có 2 dạng GPO : local là lưu trên từng máy NON local là lưu trên AD 
+  Sự thừa kế chính sách nhóm : nếu xung đột thì không kế thừa , có thể cấm kế thừa hay buộc kế thừa 
+  Các GPO mặc định 
+    Có thể liên kết (link) một GPO cho nhiều sites, nhiều Domains, hay nhiều OU  
+    Có thể liên kết (link) nhiều GPO cho một site, một Domain, hay một OU 
+  Local group policy 
+    Computer Configuration: nếu thiết lập các policy trong phần này thì đối tượng bị tác động là computer và user account  
+    User Configuration: đối tượng bị tác động là user account. 
+  Một số GP thường dùng 
+  Tương tác với GPO :
+    Đảm bảo các GPO hoạt động tốt mới áp dụng (link) trên các đối tượng (site, domain, OU) 
+    Sau khi tạo GPO độc lập, cần thực hiện liên kết GPO vào các đối tượng trên AD như site, domain hoặc OU 
+    Triển khai chính sách nhóm và tên miền : lên user hoặc computer 
+3.5 Quản trị file 
+3.5.1 Khái niệm về quyền 
+  Định nghĩa quyền truy cập của 1 đối tượng 
+  Các đối tượng có thể áp dụng quyền hạn : máy in , file .. 
+  2 hệ thống 
+    share permission : Quyền chia sẻ , việc sử dụng tài nguyên chia sẻ 
+    NTFS : Kiểm soát việc sử dụng tài nguyên hệ thống 
+  Quyền chia sẻ: kiểm soát việc truy cập và sử dụng của người dùng trên mạng 
+  Để sử dụng tập tin:  người dùng phải có quyền chia sẻ, và quyền chia sẻ này phải phù hợp với quyền NTFS   : nếu tệp nằm trong ổ đĩa định dạng theo NTFS 
+  Quyền NTFS : kiểm soát việc truy cập và sử dụng các tài nguyên trên các volume của đĩa cứng 
+3.5.2 Hệ thống quản lý quyền 
+  Sử dụng ACL , mỗi tài nguyên sẽ có 1 ACL đi kèm . Một ACL gồm nhiều ACE ( danh mục kiểm soát truy cập )  là tên người dùng và các quyền 
+  Có 2 loại ACE cơ bản là : allow và deny nghĩa là cho phép và từ chối 
+  Có 2 cách thực hiện cấp quyền là thêm quyền và bớt quyền . Thường dungf thêm quyền vì an toàn hơn 
+3.5.3 Quyền share thư mục 
+  Ít an ninh hơn NTFS  
+  Là cách duy nhất bảo vệ tài nguyên trên các phân chương không thuộc NTFS 
+  Khi di chuyển thư mục thì không được chia sẻ nữa 
+  Áp dụng cho thư mục chứ không áp dụng cho tập tin lẻ 
+  Có 3 loại quền là : full control, change , read . Default share thì là read 
+  Quyền từ chối có liệu lực cao hơn các quyền khác 
+  Quản lý các phiên làm việc trên thư mục dùng chung (Sessions) 
+  Xem các tập tin đang mở trong các thư mục dùng chung (Open Files) 
+3.5.4 Quyền truy cập NTFS 
+  Có 2 loại hệ thống tập được dùng cho partition và volume cục bộ: 
+    FAT - File Allocation Table (bao gồm FAT16 và FAT32) . mn có thể thao tác trên file chứa đĩa này 
+    NTFS - New Technology File System : NTFS partition có hỗ trợ bảo mật : Để quản lý được linh hoạt, hệ thống quyền trong NTFS được chia thành nhiều mức độkhác nhau. 
+  Quyền NTFS 	: Xác định quyền theo yêu cầu gán quyền,  Quyền được gán cho User Accounts và Groups,  Quyền có thể bị từ chối 
+  QUYỀN BASIC : hệ thống sẽkết hợp một số quyền advanced để tạo thành quyền basic gồm 6 quyền : Full controll ,Modifn,  Read & execute, List folder contents, Read ,Write 
+  Quyền thư mục NTFS : Gán quyền thư mục để kiểm soát việc truy nhập được phép của User đến thư mục và thư mục con, file nằm trong thư mục đó. 
+  Quyền file NTFS : kiểm soát truy cập đến file 
+  Cơ chế tác động của các quyền : 
+    Quyền Allow được cộng dồn (tích lũy) 
+    Quyền Deny có độ ưu tiên cao hơn quyền Allow 
+    Quyền gán công khai có độ ưu tiên cao hơn: 
+    Sự kế thừa quyền : Đọc được thư mục thì đọc được file muốn bỏ thì tắt chế độ kế thừa hoặc dùng deny 
+3.5.5 Kết hợp quyền chia sẻ và quyền NTFS 
+  Quyền chia sẻ là hệ thống quyền đơn giản nhất của Windows 
+  Quyền NTFS cung cấp rất nhiều mức độ khác nhau cho người quản trị lựa chọn 
+  Muốn sử dụng thư mục thì luôn bị kiểm soát bởi 2 quyền đó . Phải có quyền hợp lệ cả 2 mới đc sd 
+  Hệ thống quyền chia sẻ và quyền NTFS làm việc độc lập với nhau. 
+  Khi kết hợp 2 quyền khác loại:  Lấy quyền nhỏ nhất 
+  
+CHƯƠNG 4 : BẢO MẬT MẠNG 
+4.1 Khái niệm cơ bản về bảo mật mạng 
+  Bảo mật mạng là tập hợp các công cụ, chính sách, khái niệm về bảo mật, hướng dẫn, phương pháp quản lý rủi ro, phản ứng, đào tạo, diễn tập, thiết bị và công nghệ có thể được dùng để bảo vệ hệ thống mạng và tài sản 
+  Các yếu tố đảm bảo an toàn thông tin 
+    Tính bí mật: Thông tin phải đảm bảo tính bí mật và được sử dụng đúng đối tượng. 
+    Tính toàn vẹn: Thông tin phải đảm bảo đầy đủ, nguyên vẹn về cấu trúc 
+    Tính sẵn sàng: Thông tin phải luôn sẵn sàng để tiếp cận, để phục vụ theođúng mục đích và đúng cách 	
+    Tính chính xác: Thông tin phải chính xác, tin cậy 
+    Tính không khước từ (chống chối bỏ): Thông tin có thể kiểm chứng được nguồn gốc hoặc người đưa tin 
+  Các mối đe dọa ( threat) : à những gì có khả năng xâm hại 
+  Mục tiêu đe dọa tấn công: Chủ yếu là các  dịch vụ WWW, DNS 
+  Phân  loại mối đe dọa : Có mục đích, không mục đích, từ bên ngoài, từ bên trong 
+  Lỗ hổng hệ thống : là nơi đối tượng có thể khai thác : 
+  Nguy cơ hệ thống(Risk) = mối đe dọa + lỗ hổng hệ thống .Cấp độ thì có cao, tb, thấp 
+  Sau khi xác định được các lỗ hổng hệ thống, các mối đe dọa và các biện pháp anninh hiện có Xác định được mức độ nguy cơ hệ thống: 
+  Căn cứ vào 5 tiêu chí đánh giá (Chi phí, Thời gian, Danh dự, Tài nguyên hệthống, Cơ hội kinh doanh) ta có thể phân nguy cơ an toàn mạng ở một trong cácmức: cao, trung bình, thấp. 
+4.2 Một số nguy cơ tấn công : 
+  Tấn công quét mạng (Scanning Attacks) : là một kỹ thuật được tin tặc sử dụng để thăm dò và thu thập thông tin về cấu trúc, các thiết bị đang hoạt động và những lỗ hổng bảo mật tiềm tàng trong một hệ thống mạng. 
+    Port scanning , Vulnerability Scanning: , Network Scanning 
+    Phòng chống : tường lửa , IDS 
+  Tấn công giả mạo địa chỉ IP : Source routing cho phép kẻ tấn công chỉ định việc định tuyến một gói tin có thông qua Internet. Điều này cũng có thể giảm thiểu cơ hội phát hiện bằng cách bỏ qua IDS và tường lửa 
+    So sánh thời gian sống TTL 
+  Tấn công chiếm quyền máy chủ: SESSION HIJACKING đánh cắp cookie từ phiên làm việc giữa client và server 
+  Tấn công từ chối dịch vụ : là dạng tấn công làm cho các hệ thống máy chủ,trang web bị tê liệt không thể đáp ứng lại các yêu cầu của người dùng. nếu có quá nhiều client truy cập cùng lúc thì server sẽ bị quá tải  từ chối các yêu cầu truy cập khác. 
+  Tấn công từ chối dịch vụ phân tán : DoS là dạng tấn công khi hacker sử dụng một máy tính để tiến hành, còn DDoS hay Distribute Denial of Services (tấn công từ chối dịch vụ phân tán) là khi hacker tiến hành tấn công DoS từ nhiều máy tính khác nhau, thông thường là một hệ thống mạng botnet 
+  Tấn công cổng sau : Backdoor hay còn gọi là “cổng sau” là chương trình mà hacker cài đặt trên máy tính của nạn nhân để có thể điều khiển hay xâm nhập lại dễ dàng. 
+
+4.3 Một số giải pháp bảo mật mạng 	
+4.3.1 Hệ thống phát hiện xâm nhập   IDS Intrusion Detection System 
+  Là hệ thống giám sát lưu thông mạng , các hoạt động khả nghi và cảnh báo cho hệ thống 
+  Có thể phân biệt được tấn công bên trong hay tấn công bên ngoài 
+  Chức năng IDS:
+    giám sát – cảnh báo – bảo vệ 
+    Giám sát: lưu lượng mạng và các hoạt động khả nghi  
+    Cảnh báo: báo cáo về tình trạng mạng cho hệ thống và nhà quản trị.  
+    Bảo vệ: Dùng những thiết lập mặc định và sự cấu hình từ nhà quản trị mà có những hành động thiết thực chống lại kẻ xâm nhập và phá hoại. 
+    Chức năng mở rộng:  
+    Phân biệt: tấn công bên trong và tấn công bên ngoài.  
+    Phát hiện: những dấu hiệu bất thường dựa trên những gì đã biết hoặc nhờ vào sự so sánh thông lượng mạng hiện tại với baseline. 
+  Có 2 phương pháp khác nhau để phân tích sự kiện: 
+    Phát hiện dựa trên dấu hiệu : nhận dạng các sự kiện đã được định nghĩa là tấn công 
+    Phát hiện dựa trên sự bất thường : thiết lập một hiện trạng các hoạt độngbình thường và sau đó duy trì một hiện trạng Khi Hai yếu tố này xuất hiện sự khác biệt, nghĩa là đã có sự xâm nhập 
+  Quá trình được thể hiện bởi 3 yếu tố cơ bản : Thu thập thông tin (information source) ,Sự phân tích (Analysis),  Cảnh báo (response) 
+  NIDS Network-Based Intrusion Detection System 
+    Định nghĩa: Là hệ thống phát hiện xâm nhập dựa trên mạng, sử dụng các bộ dò (probes) và cảm biến (sensors) đặt khắp mạng.  
+    Cơ chế: Theo dõi và phân tích lưu lượng mạng trong thời gian thực để tìm các dấu hiệu tấn công (signatures) đã được định nghĩa sẵn. 
+    Phản ứng: Khi thấy dấu hiệu bất thường, nó gửi cảnh báo đến trạm quản trị và có thể kích hoạt các biện pháp ngăn chặn. 
+    Vị trí: Thường đặt giữa mạng nội bộ và mạng bên ngoài để giám sát toàn bộ lưu lượng ra/vào. Có thể là thiết bị phần cứng riêng biệt hoặc phần mềm. 
+  HIDS 
+    Định nghĩa: Là hệ thống phát hiện xâm nhập dựa trên máy chủ, bằng cách cài đặt trực tiếp phần mềm lên từng máy tính/máy chủ (host) cụ thể 
+    Mục tiêu giám sát: Theo dõi sát sao các hoạt động nội bộ của máy tính đó, bao gồm: hệ điều hành (OS), tiến trình đang chạy, Registry, mức sử dụng CPU, tính toàn vẹn của file (file system), nhật ký hệ thống (log),.. 
+     Xác định độ chính xác cao: Biết rõ cuộc tấn công có thành công hay không và ghi nhận được chi tiết kẻ tấn công đã làm gì trên máy.
+    Xử lý được dữ liệu mã hóa: Có thể phân tích được dữ liệu đã mã hóa (vì dữ liệu khi đến máy chủ đích sẽ được giải mã để xử lý)
+
+4.3.2 Hệ thống tường lửa 
+  Là một hệ thống an ninh mạng, có thể dựa trên phần cứng hoặc phần mềm.Hoạt động như một rào chắn giữa mạng an toàn và mạng không an toàn. 
+  Điều khiển truy cập bằng việc cho phép hoặc từ chối các dòng dữ liệu vào/ra,dựa trên một tập luật, thường gọi là chính sách Firewall 
+  Phân loại tường lửa : 
+    Theo vị trí : Network Firewall , Host Firewall 
+    Theo nền tảng : Software Firewall, Hardware Firewall 
+    Khả năng : Packet Filter: Hoạt động ở Layer 3 – 4 (Mô hình OSI) , Application Filter: Hoạt động ở Layer 7,  State Full Filter: Hoạt động từ Layer 3 – 7 
+  Chính sách tường lửa : Các chính sách, các luật thường có 7 thuộc tính : 
+    Chiều đi của gói tin (vào hoặc ra)  
+    Giao thức (TCP hoặc UDP)  
+    Địa chỉ IP nguồn, hoặc một dải địa chỉ IP nguồn  
+    Cổng nguồn  
+    Địa chỉ IP đích hoặc một dải địa chỉ IP đích  
+    Cổng đích 
+     Hành động (chấp nhận hoặc từ chối)  
